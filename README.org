@@ -2,6 +2,12 @@
 emacs -q -l init.el
 #+end_src
 
+* Packages
+
+#+begin_src emacs-lisp
+(describe-package)
+#+end_src
+
 * Update packages
 
 #+begin_src emacs-lisp
