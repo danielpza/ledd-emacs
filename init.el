@@ -23,6 +23,8 @@
 ;; general
 ;; use-package
 
+(unless (package-installed-p 'use-package) (package-install 'use-package))
+
 (eval-when-compile
   (require 'use-package))
 
