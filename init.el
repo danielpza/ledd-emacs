@@ -10,7 +10,7 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 
-;; packages
+;; package.el
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives
