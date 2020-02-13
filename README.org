@@ -2,12 +2,25 @@
 emacs -q -l init.el
 #+end_src
 
+* Update packages
+
+#+begin_src emacs-lisp
+(package-refresh-contents)
+(list-packages)
+#+end_src
+
+#+begin_example
+U x
+#+end_example
+
+* Keybindings
+
 #+begin_src emacs-lisp
 (general-describe-keybindings)
 #+end_src
 
-* Local Keybindings
-* Evil-Normal-State-Map Keybindings
+** Local Keybindings
+** Evil-Normal-State-Map Keybindings
 | key       | command                                              | previous |
 |-----------+------------------------------------------------------+----------|
 | =SPC h=   | ~(keymap (113 . help-quit) (118 . describe-variable~ | ~nil~    |
@@ -19,7 +32,7 @@ emacs -q -l init.el
 | =SPC b n= | ~next-buffer~                                        | ~2~      |
 | =SPC b s= | ~open-scratch-buffer~                                | ~2~      |
 
-* Evil-Visual-State-Map Keybindings
+** Evil-Visual-State-Map Keybindings
 | key     | command        | previous |
 |---------+----------------+----------|
 | =SPC ;= | ~comment-dwim~ | ~nil~    |
