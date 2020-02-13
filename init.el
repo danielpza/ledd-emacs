@@ -11,11 +11,11 @@
 (tool-bar-mode -1)
 
 ;; packages
+(setq package-enable-at-startup nil)
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
-;; (package-refresh-contents)
 
 ;; core-packages:
 ;; evil
@@ -23,7 +23,9 @@
 ;; general
 ;; use-package
 
-(unless (package-installed-p 'use-package) (package-install 'use-package))
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
 (eval-when-compile
   (require 'use-package))
@@ -39,9 +41,6 @@
   (setq ivy-use-virtual-buffers t
         ivy-height 20)
   (ivy-mode 1))
-
-;; notes:
-;; general-describe-keybindings: show all general keybindings
 
 (use-package general
   :config
@@ -78,7 +77,8 @@
 ;; not-core
 
 ;; finance
-(use-package ledger-mode)
+(use-package ledger-mode
+  :defer t)
 
 ;; ui
 (use-package doom-themes
