@@ -13,7 +13,7 @@
 ;; packages
 (require 'package)
 (add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/") t)
+             '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 ;; (package-refresh-contents)
 
@@ -37,7 +37,7 @@
 (use-package ivy
   :config
   (setq ivy-use-virtual-buffers t
-	ivy-height 20)
+        ivy-height 20)
   (ivy-mode 1))
 
 ;; notes:
@@ -55,25 +55,25 @@
     :prefix my-local-leader)
 
   (my-leader-def 'normal
-    "h" help-map
-    "w" evil-window-map)
+                 "h" help-map
+                 "w" evil-window-map)
 
   (my-leader-def 'normal
-    ":" #'execute-extended-command)
+                 ":" #'execute-extended-command)
 
   (my-leader-def 'visual
-    ";" #'comment-dwim)
+                 ";" #'comment-dwim)
 
   (my-leader-def 'normal
-    :infix "f"
-    "f" #'find-file)
+                 :infix "f"
+                 "f" #'find-file)
 
   (my-leader-def 'normal
-    :infix "b"
-    "b" #'ivy-switch-buffer
-    "p" #'previous-buffer
-    "n" #'next-buffer
-    "s" #'open-scratch-buffer))
+                 :infix "b"
+                 "b" #'ivy-switch-buffer
+                 "p" #'previous-buffer
+                 "n" #'next-buffer
+                 "s" #'open-scratch-buffer))
 
 ;; not-core
 
