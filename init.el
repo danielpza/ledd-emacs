@@ -11,17 +11,11 @@
 (tool-bar-mode -1)
 
 ;; packages
-(setq package-enable-at-startup nil)
 (require 'package)
+(setq package-enable-at-startup nil)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
-
-;; core-packages:
-;; evil
-;; ivy
-;; general
-;; use-package
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -31,6 +25,12 @@
   (require 'use-package))
 
 (setq use-package-always-ensure t)
+
+;; core-packages:
+;; evil
+;; ivy
+;; general
+;; use-package
 
 (use-package evil
   :config
