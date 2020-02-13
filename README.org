@@ -1,3 +1,7 @@
+#+begin_src sh
+emacs -q -l init.el
+#+end_src
+
 #+begin_src emacs-lisp
 (general-describe-keybindings)
 #+end_src
