@@ -1,0 +1,21 @@
+#+begin_src emacs-lisp
+(general-describe-keybindings)
+#+end_src
+
+* Local Keybindings
+* Evil-Normal-State-Map Keybindings
+| key       | command                                              | previous |
+|-----------+------------------------------------------------------+----------|
+| =SPC h=   | ~(keymap (113 . help-quit) (118 . describe-variable~ | ~nil~    |
+| =SPC w=   | ~(keymap (6 . ffap-other-window) (31 . evil-window-~ | ~nil~    |
+| =SPC :=   | ~execute-extended-command~                           | ~nil~    |
+| =SPC f f= | ~find-file~                                          | ~2~      |
+| =SPC b b= | ~ivy-switch-buffer~                                  | ~2~      |
+| =SPC b p= | ~previous-buffer~                                    | ~2~      |
+| =SPC b n= | ~next-buffer~                                        | ~2~      |
+| =SPC b s= | ~open-scratch-buffer~                                | ~2~      |
+
+* Evil-Visual-State-Map Keybindings
+| key     | command        | previous |
+|---------+----------------+----------|
+| =SPC ;= | ~comment-dwim~ | ~nil~    |
