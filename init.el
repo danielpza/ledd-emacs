@@ -83,4 +83,4 @@
 (use-package doom-themes
   :defer t
   :init
-  (load-theme 'doom-dark+))
+  (load-theme 'doom-dark+ t))
