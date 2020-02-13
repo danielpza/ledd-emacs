@@ -6,6 +6,7 @@ emacs -q -l init.el
 
 #+begin_src emacs-lisp
 (package-refresh-contents)
+
 (list-packages)
 #+end_src
 
