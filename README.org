@@ -29,19 +29,38 @@ U x
 #+end_src
 
 ** Local Keybindings
+** Global Keybindings
+ | key   | command       | previous                   |
+ |-------+---------------+----------------------------|
+ | =M-x= | ~counsel-M-x~ | ~execute-extended-command~ |
+
 ** Evil-Normal-State-Map Keybindings
-| key       | command                                              | previous |
-|-----------+------------------------------------------------------+----------|
-| =SPC h=   | ~(keymap (113 . help-quit) (118 . describe-variable~ | ~nil~    |
-| =SPC w=   | ~(keymap (6 . ffap-other-window) (31 . evil-window-~ | ~nil~    |
-| =SPC :=   | ~execute-extended-command~                           | ~nil~    |
-| =SPC f f= | ~find-file~                                          | ~2~      |
-| =SPC b b= | ~ivy-switch-buffer~                                  | ~2~      |
-| =SPC b p= | ~previous-buffer~                                    | ~2~      |
-| =SPC b n= | ~next-buffer~                                        | ~2~      |
-| =SPC b s= | ~open-scratch-buffer~                                | ~2~      |
+ | key       | command                                              | previous |
+ |-----------+------------------------------------------------------+----------|
+ | =SPC h=   | ~(keymap (113 . help-quit) (118 . describe-variable~ | ~nil~    |
+ | =SPC p=   | ~(keymap (27 . projectile-project-buffers-other-buf~ | ~nil~    |
+ | =SPC w=   | ~(keymap (6 . ffap-other-window) (31 . evil-window-~ | ~nil~    |
+ | =SPC SPC= | ~counsel-M-x~                                        | ~nil~    |
+ | =SPC :=   | ~counsel-M-x~                                        | ~nil~    |
+ | =SPC c f= | ~format-all-buffer~                                  | ~2~      |
+ | =SPC d r= | ~refresh-packages~                                   | ~2~      |
+ | =SPC f t= | ~treemacs~                                           | ~2~      |
+ | =SPC f p= | ~find-init-file~                                     | ~2~      |
+ | =SPC f r= | ~counsel-recentf~                                    | ~2~      |
+ | =SPC f f= | ~find-file~                                          | ~2~      |
+ | =SPC f s= | ~save-buffer~                                        | ~2~      |
+ | =SPC t w= | ~whitespace-mode~                                    | ~2~      |
+ | =SPC t u= | ~undo-tree-visualize~                                | ~2~      |
+ | =SPC s p= | ~counsel-rg~                                         | ~2~      |
+ | =SPC g g= | ~magit-status~                                       | ~2~      |
+ | =SPC b k= | ~kill-current-buffer~                                | ~2~      |
+ | =SPC b e= | ~eval-buffer~                                        | ~2~      |
+ | =SPC b b= | ~ivy-switch-buffer~                                  | ~2~      |
+ | =SPC b p= | ~previous-buffer~                                    | ~2~      |
+ | =SPC b n= | ~next-buffer~                                        | ~2~      |
+ | =SPC b s= | ~open-scratch-buffer~                                | ~2~      |
 
 ** Evil-Visual-State-Map Keybindings
-| key     | command        | previous |
-|---------+----------------+----------|
-| =SPC ;= | ~comment-dwim~ | ~nil~    |
+ | key     | command        | previous |
+ |---------+----------------+----------|
+ | =SPC ;= | ~comment-dwim~ | ~nil~    |

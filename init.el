@@ -67,6 +67,7 @@
 				  ;; org
 				  org
 				  htmlize
+				  evil-org
 
 				  ;; ui
 				  doom-themes
@@ -100,6 +101,9 @@
      (shell . t)
      (ledger .t )
      (ruby . t))))
+
+(use-package evil-org
+  :after org)
 
 (use-package evil
   :init
