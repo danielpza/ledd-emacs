@@ -6,6 +6,8 @@ emacs -q -l init.el
 
 #+begin_src emacs-lisp
 (describe-package)
+
+package-activated-list
 #+end_src
 
 * Update packages
