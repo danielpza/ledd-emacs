@@ -121,6 +121,7 @@
 
   (my-leader-def 'normal
     :infix "b"
+    "e" #'eval-buffer
     "b" #'ivy-switch-buffer
     "p" #'previous-buffer
     "n" #'next-buffer
