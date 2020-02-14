@@ -46,6 +46,9 @@
 				  evil
 				  projectile
 
+				  ;; treemacs
+				  treemacs
+
 				  ;; code
 				  format-all
 
@@ -68,6 +71,7 @@
 
 				  ;; ui
 				  doom-themes
+				  all-the-icons
 
 				  ;; finances
 				  ledger-mode))
@@ -153,6 +157,7 @@
 
   (leader-define 'normal
     :infix "f"
+    "t" #'treemacs
     "p" #'find-init-file
     "r" #'counsel-recentf
     "f" #'find-file
@@ -180,7 +185,15 @@
 (use-package ledger-mode
   :mode "\\.ledger\\'")
 
+(use-package treemacs
+  :commands treemacs)
+
 (when (file-exists-p (concat user-emacs-directory "custom.el"))
   (load-file (concat user-emacs-directory "custom.el")))
+
+(use-package doom-themes
+  :config
+  (setq doom-themes-treemacs-theme "doom-colors")
+  (doom-themes-treemacs-config))
 
 (use-package-report)
