@@ -109,9 +109,7 @@
   (projectile-mode 1)
   (setq projectile-completion-system 'ivy))
 
-(use-package format-all
-  :config
-  (format-all-mode 1))
+(use-package format-all)
 
 (use-package magit
   :commands magit-status
