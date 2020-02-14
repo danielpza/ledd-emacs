@@ -156,7 +156,7 @@
     "p" projectile-command-map
     "w" evil-window-map)
 
-  (leader-define 'normal
+  (leader-define '(normal visual)
     "TAB" #'evil-switch-to-windows-last-buffer
     "SPC" #'counsel-M-x
     ":" #'counsel-M-x)
