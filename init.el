@@ -117,7 +117,8 @@
 
 (use-package undo-tree
   :config
-  (setq undo-tree-visualizer-diff t)
+  (setq undo-tree-visualizer-diff t
+	undo-tree-visualizer-timestamps t)
   (global-undo-tree-mode))
 
 (use-package projectile
