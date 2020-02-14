@@ -199,6 +199,7 @@
     "k" #'kill-current-buffer
     "e" #'eval-buffer
     "b" #'ivy-switch-buffer
+    "r" #'revert-buffer
     "p" #'previous-buffer
     "n" #'next-buffer
     "s" #'open-scratch-buffer))
