@@ -14,6 +14,10 @@
   (package-install-selected-packages)
   (package-autoremove))
 
+(defun find-init-file ()
+  (interactive)
+  (find-file user-init-file))
+
 ;; defaults
 
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -140,6 +144,7 @@
 
   (leader-define 'normal
     :infix "c"
+    "i" #'find-init-file
     "f" #'format-all-buffer)
 
   (leader-define 'normal
