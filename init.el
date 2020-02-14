@@ -66,6 +66,7 @@
 
   (my-leader-def 'normal
                  :infix "f"
+                 "s" #'save-buffer
                  "f" #'find-file)
 
   (my-leader-def 'normal
