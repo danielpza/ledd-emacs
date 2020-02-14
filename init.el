@@ -21,7 +21,7 @@
 ;; defaults
 
 (fset 'yes-or-no-p 'y-or-n-p)
-(display-line-numbers-mode)
+(global-display-line-numbers-mode)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 (scroll-bar-mode -1)
@@ -72,6 +72,9 @@
 				  ;; ui
 				  doom-themes
 				  all-the-icons
+
+				  ;; lang
+				  web-mode
 
 				  ;; finances
 				  ledger-mode))
@@ -195,5 +198,8 @@
   :config
   (setq doom-themes-treemacs-theme "doom-colors")
   (doom-themes-treemacs-config))
+
+(use-package web-mode
+  :mode ("\\.erb\\'" . web-mode))
 
 (use-package-report)
