@@ -46,8 +46,7 @@
 				  use-package
 				  evil
 				  projectile
-
-				  ;; treemacs
+				  undotree
 				  treemacs
 
 				  ;; code
@@ -116,6 +115,10 @@
 	ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
   (ivy-mode 1))
 
+(use-package undo-tree
+  :config
+  (global-undo-tree-mode))
+
 (use-package projectile
   :config
   (projectile-mode 1)
@@ -169,6 +172,11 @@
     "r" #'counsel-recentf
     "f" #'find-file
     "s" #'save-buffer)
+
+  ;; toggle
+  (leader-define 'normal
+    :infix "t"
+    "u" #'undo-tree-visualize)
 
   (leader-define 'normal
     :infix "s"
