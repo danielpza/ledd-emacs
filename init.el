@@ -60,7 +60,6 @@
 				  magit
 				  evil-magit
 
-
 				  ;; keybindings
 				  general
 				  which-key
@@ -168,6 +167,10 @@
     "r" #'counsel-recentf
     "f" #'find-file
     "s" #'save-buffer)
+
+  (leader-define 'normal
+    :infix "s"
+    "p" #'counsel-rg)
 
   (leader-define 'normal
     :infix "g"
