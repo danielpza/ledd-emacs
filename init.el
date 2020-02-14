@@ -164,6 +164,7 @@
 
   (leader-define 'normal
     :infix "b"
+    "k" #'kill-current-buffer
     "e" #'eval-buffer
     "b" #'ivy-switch-buffer
     "p" #'previous-buffer
