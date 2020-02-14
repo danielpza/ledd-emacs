@@ -107,6 +107,10 @@
     ";" #'comment-dwim)
 
   (my-leader-def 'normal
+    :infix "d"
+    "r" #'refresh-packages)
+
+  (my-leader-def 'normal
     :infix "f"
     "f" #'find-file
     "s" #'save-buffer)
