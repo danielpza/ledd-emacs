@@ -124,42 +124,42 @@
     :prefix my-leader)
 
   (leader-define 'normal
-		 "h" help-map
-		 "p" projectile-command-map
-		 "w" evil-window-map)
+    "h" help-map
+    "p" projectile-command-map
+    "w" evil-window-map)
 
   (leader-define 'normal
-		 "SPC" #'counsel-M-x
-		 ":" #'counsel-M-x)
+    "SPC" #'counsel-M-x
+    ":" #'counsel-M-x)
 
   (leader-define 'visual
-		 ";" #'comment-dwim)
+    ";" #'comment-dwim)
 
   (leader-define 'normal
-		 :infix "c"
-		 "f" #'format-all-buffer)
+    :infix "c"
+    "f" #'format-all-buffer)
 
   (leader-define 'normal
-		 :infix "d"
-		 "r" #'refresh-packages)
+    :infix "d"
+    "r" #'refresh-packages)
 
   (leader-define 'normal
-		 :infix "f"
-		 "r" #'counsel-recentf
-		 "f" #'find-file
-		 "s" #'save-buffer)
+    :infix "f"
+    "r" #'counsel-recentf
+    "f" #'find-file
+    "s" #'save-buffer)
 
   (leader-define 'normal
-		 :infix "g"
-		 "g" #'magit-status)
+    :infix "g"
+    "g" #'magit-status)
 
   (leader-define 'normal
-		 :infix "b"
-		 "e" #'eval-buffer
-		 "b" #'ivy-switch-buffer
-		 "p" #'previous-buffer
-		 "n" #'next-buffer
-		 "s" #'open-scratch-buffer))
+    :infix "b"
+    "e" #'eval-buffer
+    "b" #'ivy-switch-buffer
+    "p" #'previous-buffer
+    "n" #'next-buffer
+    "s" #'open-scratch-buffer))
 
 (use-package which-key
   :config
