@@ -23,11 +23,11 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 
-
-(setq inhibit-startup-screen t)
-(setq initial-scratch-message
-      (concat initial-scratch-message (concat "emacs-init-time: " (emacs-init-time))))
-(setq debug-on-error t)
+(setq make-backup-files nil
+      auto-save-default nil
+      inhibit-startup-screen t
+      initial-scratch-message (concat initial-scratch-message (concat "emacs-init-time: " (emacs-init-time)))
+      debug-on-error t)
 
 ;; package.el
 
