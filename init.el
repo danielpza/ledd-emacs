@@ -132,6 +132,10 @@
     ";" #'comment-dwim)
 
   (my-leader-def 'normal
+    :infix "d"
+    "r" #'refresh-packages)
+
+  (my-leader-def 'normal
     :infix "f"
     "r" #'counsel-recentf
     "f" #'find-file
@@ -143,6 +147,7 @@
 
   (my-leader-def 'normal
     :infix "b"
+    "e" #'eval-buffer
     "b" #'ivy-switch-buffer
     "p" #'previous-buffer
     "n" #'next-buffer
