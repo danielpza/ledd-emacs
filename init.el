@@ -1,3 +1,7 @@
+;; https://stackoverflow.com/questions/17483598/maintaining-multiple-emacs-configurations-at-the-same-time
+(setq user-init-file (or load-file-name (buffer-file-name)))
+(setq user-emacs-directory (file-name-directory user-init-file))
+
 ;; functions
 
 (defun open-scratch-buffer ()
