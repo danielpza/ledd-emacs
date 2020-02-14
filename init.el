@@ -14,10 +14,15 @@
 
 (fset 'yes-or-no-p 'y-or-n-p)
 (display-line-numbers-mode)
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 
+
+(setq inhibit-startup-screen t)
+(setq initial-scratch-message
+      (concat initial-scratch-message (concat "emacs-init-time: " (emacs-init-time))))
 (setq debug-on-error t)
 
 ;; package.el
@@ -31,14 +36,24 @@
 (setq package-selected-packages '(;; core
 				  use-package
 				  evil
+				  projectile
+
+				  ;; ivy
 				  ivy
-				  org
+				  counsel
+
+				  ;; magit
 				  magit
 				  evil-magit
-				  projectile
+
+
+				  ;; keybindings
 				  general
 				  which-key
-				  counsel
+
+				  ;; org
+				  org
+				  htmlize
 
 				  ;; ui
 				  doom-themes
@@ -57,6 +72,17 @@
 
 (setq use-package-compute-statistics t)
 
+(use-package org
+  :config
+  (setq org-confirm-babel-evaluate nil)
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (shell . t)
+     (ledger .t )
+     (ruby . t))))
+
 (use-package evil
   :init
   (setq evil-want-C-u-scroll t)
@@ -66,10 +92,9 @@
 (use-package ivy
   :config
   (setq ivy-use-virtual-buffers t
-	ivy-height 20)
+	ivy-height 20
+	ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
   (ivy-mode 1))
-
-(use-package counsel)
 
 (use-package projectile
   :config
@@ -108,6 +133,7 @@
 
   (my-leader-def 'normal
     :infix "f"
+    "r" #'counsel-recentf
     "f" #'find-file
     "s" #'save-buffer)
 
