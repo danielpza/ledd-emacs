@@ -10,7 +10,6 @@
   (package-install-selected-packages)
   (package-autoremove))
 
-
 ;; defaults
 
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -18,6 +17,8 @@
 
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
+
+(setq debug-on-error t)
 
 ;; package.el
 
@@ -33,8 +34,11 @@
 				  ivy
 				  org
 				  magit
+				  evil-magit
 				  projectile
 				  general
+				  which-key
+				  counsel
 
 				  ;; ui
 				  doom-themes
@@ -54,6 +58,8 @@
 (setq use-package-compute-statistics t)
 
 (use-package evil
+  :init
+  (setq evil-want-C-u-scroll t)
   :config
   (evil-mode 1))
 
@@ -62,6 +68,8 @@
   (setq ivy-use-virtual-buffers t
 	ivy-height 20)
   (ivy-mode 1))
+
+(use-package counsel)
 
 (use-package projectile
   :config
@@ -72,6 +80,9 @@
   :commands magit-status
   :config
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1))
+
+(use-package evil-magit
+  :after (magit))
 
 (use-package general
   :config
@@ -90,7 +101,7 @@
     "w" evil-window-map)
 
   (my-leader-def 'normal
-    ":" #'execute-extended-command)
+    ":" #'counsel-M-x)
 
   (my-leader-def 'visual
     ";" #'comment-dwim)
@@ -110,6 +121,12 @@
     "p" #'previous-buffer
     "n" #'next-buffer
     "s" #'open-scratch-buffer))
+
+(use-package which-key
+  :config
+  (which-key-mode 1)
+  (push '((nil . "projectile-\\(.+\\)") . (nil . "\\1"))
+	which-key-replacement-alist))
 
 (use-package ledger-mode
   :mode "\\.ledger\\'")
