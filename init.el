@@ -84,7 +84,7 @@
 (setq use-package-compute-statistics t)
 
 (use-package org
-  :mode "\\.org\\'"
+  :mode ("\\.org\\'" . org-mode)
   :config
   (setq org-confirm-babel-evaluate nil)
 
@@ -105,6 +105,7 @@
   :config
   (setq ivy-use-virtual-buffers t
 	ivy-height 20
+	ivy-wrap t
 	ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
   (ivy-mode 1))
 
@@ -144,7 +145,6 @@
 
   (leader-define 'normal
     :infix "c"
-    "i" #'find-init-file
     "f" #'format-all-buffer)
 
   (leader-define 'normal
@@ -153,6 +153,7 @@
 
   (leader-define 'normal
     :infix "f"
+    "p" #'find-init-file
     "r" #'counsel-recentf
     "f" #'find-file
     "s" #'save-buffer)
