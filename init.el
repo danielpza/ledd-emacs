@@ -138,6 +138,9 @@
   (general-create-definer leader-define
     :prefix my-leader)
 
+  (general-define-key "M-x"
+		      #'counsel-M-x)
+
   (leader-define 'normal
     "h" help-map
     "p" projectile-command-map
