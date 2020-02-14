@@ -178,6 +178,8 @@
   ;; toggle
   (leader-define 'normal
     :infix "t"
+    "t" #'treemacs
+    "w" #'whitespace-mode
     "u" #'undo-tree-visualize)
 
   (leader-define 'normal
