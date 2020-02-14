@@ -133,6 +133,7 @@
     "w" evil-window-map)
 
   (my-leader-def 'normal
+    "SPC" #'counsel-M-x
     ":" #'counsel-M-x)
 
   (my-leader-def 'visual
