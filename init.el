@@ -169,7 +169,3 @@
 
 (use-package ledger-mode
   :mode "\\.ledger\\'")
-
-(use-package doom-themes
-  :config
-  (load-theme 'doom-dark+ t))
