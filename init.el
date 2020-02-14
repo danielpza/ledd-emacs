@@ -204,5 +204,3 @@
 
 (use-package web-mode
   :mode ("\\.erb\\'" . web-mode))
-
-(use-package-report)
