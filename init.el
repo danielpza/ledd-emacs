@@ -175,4 +175,7 @@
 (use-package ledger-mode
   :mode "\\.ledger\\'")
 
+(when (file-exists-p (concat user-emacs-directory "custom.el"))
+  (load-file (concat user-emacs-directory "custom.el")))
+
 (use-package-report)
