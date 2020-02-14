@@ -157,6 +157,7 @@
     "w" evil-window-map)
 
   (leader-define 'normal
+    "TAB" #'evil-switch-to-windows-last-buffer
     "SPC" #'counsel-M-x
     ":" #'counsel-M-x)
 
