@@ -28,6 +28,7 @@
 (tool-bar-mode -1)
 
 (setq make-backup-files nil
+      indent-tabs-mode nil
       auto-save-default nil
       inhibit-startup-screen t
       initial-scratch-message (concat initial-scratch-message (concat "emacs-init-time: " (emacs-init-time)))
