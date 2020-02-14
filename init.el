@@ -76,6 +76,7 @@
 (setq use-package-compute-statistics t)
 
 (use-package org
+  :mode "\\.org\\'"
   :config
   (setq org-confirm-babel-evaluate nil)
 
