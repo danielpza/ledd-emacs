@@ -170,3 +170,5 @@
 
 (use-package ledger-mode
   :mode "\\.ledger\\'")
+
+(use-package-report)
