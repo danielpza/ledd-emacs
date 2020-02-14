@@ -38,6 +38,9 @@
 				  evil
 				  projectile
 
+				  ;; code
+				  format-all
+
 				  ;; ivy
 				  ivy
 				  counsel
@@ -101,6 +104,10 @@
   (projectile-mode 1)
   (setq projectile-completion-system 'ivy))
 
+(use-package format-all
+  :config
+  (format-all-mode 1))
+
 (use-package magit
   :commands magit-status
   :config
@@ -130,6 +137,10 @@
 
   (my-leader-def 'visual
     ";" #'comment-dwim)
+
+  (my-leader-def 'normal
+    :infix "c"
+    "f" #'format-all-buffer)
 
   (my-leader-def 'normal
     :infix "d"
