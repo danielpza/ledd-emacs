@@ -27,6 +27,7 @@
 
 ;; core-packages:
 ;; evil
+;; counsel
 ;; ivy
 ;; general
 ;; use-package
@@ -37,6 +38,8 @@
   (setq evil-want-C-u-scroll t)
   :config
   (evil-mode 1))
+
+(use-package counsel)
 
 (use-package ivy
   :config
@@ -60,7 +63,7 @@
                  "w" evil-window-map)
 
   (my-leader-def 'normal
-                 ":" #'execute-extended-command)
+                 ":" #'counsel-M-x)
 
   (my-leader-def 'visual
                  ";" #'comment-dwim)
