@@ -30,6 +30,7 @@
 ;; ivy
 ;; general
 ;; use-package
+;; which-key
 
 (use-package evil
   :init
@@ -75,6 +76,10 @@
                  "p" #'previous-buffer
                  "n" #'next-buffer
                  "s" #'open-scratch-buffer))
+
+(use-package which-key
+  :config
+  (which-key-mode 1))
 
 ;; not-core
 
