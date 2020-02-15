@@ -49,6 +49,7 @@
 				  projectile
 				  undotree
 				  treemacs
+				  company
 
 				  ;; code
 				  format-all
@@ -101,6 +102,10 @@
      (shell . t)
      (ledger .t )
      (ruby . t))))
+
+(use-package company
+  :init
+  (global-company-mode))
 
 (use-package evil-org
   :after org)
