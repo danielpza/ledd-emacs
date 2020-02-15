@@ -197,9 +197,10 @@
     "b" #'counsel-grep-or-swiper
     "p" #'counsel-rg)
 
-  (leader-define 'normal
+  (leader-define '(normal visual)
     :infix "g"
-    "g" #'magit-status)
+    "g" #'magit-status
+    "lbf" #'magit-log-buffer-file)
 
   (leader-define 'normal
     :infix "b"
