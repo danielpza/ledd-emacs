@@ -18,6 +18,10 @@
   (interactive)
   (find-file user-init-file))
 
+(defun eval-init-file ()
+  (interactive)
+  (load-file user-init-file))
+
 ;; defaults
 
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -91,10 +95,16 @@
 
 (setq use-package-compute-statistics t)
 
+(use-package company
+  :init
+  (global-company-mode))
+
 (use-package org
   :mode ("\\.org\\'" . org-mode)
   :config
-  (setq org-confirm-babel-evaluate nil)
+  (setq org-confirm-babel-evaluate nil
+	org-agenda-files (list org-directory)
+	org-todo-keywords '((sequence "TODO(t)" "PROJ(p)" "STRT(s)" "WAIT(w)" "|" "DONE(d)" "KILL(k)")))
 
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -103,12 +113,13 @@
      (ledger .t )
      (ruby . t))))
 
-(use-package company
-  :init
-  (global-company-mode))
-
 (use-package evil-org
   :after org)
+
+(use-package evil-org-agenda
+  :after evil-org
+  :config
+  (evil-org-agenda-set-keys))
 
 (use-package evil
   :init
@@ -147,13 +158,10 @@
 
 (use-package general
   :config
+  (general-define-key "M-x" #'counsel-M-x)
 
-  (defconst my-leader "SPC")
   (general-create-definer leader-define
-    :prefix my-leader)
-
-  (general-define-key "M-x"
-		      #'counsel-M-x)
+    :prefix "SPC")
 
   (leader-define 'normal
     "h" help-map
@@ -201,6 +209,15 @@
     :infix "g"
     "g" #'magit-status
     "lbf" #'magit-log-buffer-file)
+
+  (leader-define 'normal
+    :infix "o"
+    "a" #'org-agenda)
+
+  (leader-define '(normal visual)
+    :infix "e"
+    "i" #'eval-init-file
+    "b" #'eval-buffer)
 
   (leader-define 'normal
     :infix "b"
