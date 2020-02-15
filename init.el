@@ -115,8 +115,7 @@
   :config
   (setq ivy-use-virtual-buffers t
 	ivy-height 20
-	ivy-wrap t
-	ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
+	ivy-wrap t)
   (ivy-mode 1))
 
 (use-package undo-tree
@@ -157,9 +156,10 @@
     "w" evil-window-map)
 
   (leader-define '(normal visual)
-    "TAB" #'evil-switch-to-windows-last-buffer
     "SPC" #'counsel-M-x
-    ":" #'counsel-M-x)
+    ":" #'counsel-M-x
+    "TAB" #'evil-switch-to-windows-last-buffer
+    "/" #'counsel-rg)
 
   (leader-define 'visual
     ";" #'comment-dwim)
@@ -189,6 +189,7 @@
 
   (leader-define 'normal
     :infix "s"
+    "b" #'counsel-grep-or-swiper
     "p" #'counsel-rg)
 
   (leader-define 'normal
