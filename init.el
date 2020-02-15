@@ -26,6 +26,7 @@
 
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
+(tooltip-mode -1)
 
 (setq make-backup-files nil
       indent-tabs-mode nil
