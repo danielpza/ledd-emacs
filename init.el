@@ -53,8 +53,7 @@
 				  ;; code
 				  format-all
 
-				  ;; ivy
-				  ivy
+				  ;; also installs ivy and swiper
 				  counsel
 
 				  ;; magit
