@@ -166,19 +166,21 @@
   :config
   (general-define-key "M-x" #'counsel-M-x)
 
+  (general-unbind 'motion
+    "SPC")
+
   (general-create-definer leader-define
     :prefix "SPC")
-
-  (leader-define
-    :states 'motion
-    :keymaps 'override
-    "w" evil-window-map)
 
   (leader-define 'normal
     "h" help-map
     "p" projectile-command-map)
 
-  (leader-define '(normal visual)
+  (leader-define
+    :states '(normal treemacs)
+    "w" evil-window-map)
+
+  (leader-define 'motion
     "SPC" #'counsel-M-x
     ":" #'counsel-M-x
     "TAB" #'evil-switch-to-windows-last-buffer
