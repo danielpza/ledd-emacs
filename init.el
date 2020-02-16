@@ -173,6 +173,9 @@
   (general-create-definer leader-define
     :prefix "SPC")
 
+  (general-create-definer local-leader-define
+    :prefix "SPC m")
+
   (leader-define 'normal
     "h" help-map
     "p" projectile-command-map)
@@ -221,11 +224,13 @@
   (leader-define '(normal visual)
     :infix "g"
     "g" #'magit-status
-    "lbf" #'magit-log-buffer-file)
+    "db" #'magit-diff-buffer-file
+    "lb" #'magit-log-buffer-file)
 
   (leader-define 'normal
     :infix "o"
-    "a" #'org-agenda)
+    "a" #'org-agenda
+    "d" #'dired)
 
   (leader-define '(normal visual)
     :infix "e"
@@ -240,7 +245,12 @@
     "r" #'revert-buffer
     "p" #'previous-buffer
     "n" #'next-buffer
-    "s" #'open-scratch-buffer))
+    "s" #'open-scratch-buffer)
+
+  (local-leader-define
+   :states 'normal
+   :keymaps 'org-mode-map
+   "e" #'org-export-dispatch))
 
 (use-package which-key
   :config
