@@ -36,6 +36,7 @@
       indent-tabs-mode nil
       auto-save-default nil
       inhibit-startup-screen t
+      ring-bell-function 'ignore
       initial-scratch-message (concat initial-scratch-message (concat "emacs-init-time: " (emacs-init-time)))
       debug-on-error t)
 
@@ -256,9 +257,6 @@
 (use-package treemacs-evil
   :after treemacs)
 
-(when (file-exists-p (concat user-emacs-directory "custom.el"))
-  (load-file (concat user-emacs-directory "custom.el")))
-
 (use-package doom-themes
   :config
   (setq doom-themes-treemacs-theme "doom-colors")
@@ -266,3 +264,9 @@
 
 (use-package web-mode
   :mode ("\\.erb\\'" . web-mode))
+
+(setq custom-file (concat user-emacs-directory "custom.el"))
+
+;; remove when not calling emacs with -q
+(when (file-exists-p custom-file)
+  (load-file custom-file))
