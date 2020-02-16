@@ -52,8 +52,11 @@
 				  evil
 				  projectile
 				  undotree
-				  treemacs
 				  company
+
+				  ;; treemacs
+				  treemacs
+				  treemacs-evil
 
 				  ;; code
 				  format-all
@@ -104,6 +107,7 @@
   :config
   (setq org-confirm-babel-evaluate nil
 	org-agenda-files (list org-directory)
+	org-startup-indented t
 	org-todo-keywords '((sequence "TODO(t)" "PROJ(p)" "STRT(s)" "WAIT(w)" "|" "DONE(d)" "KILL(k)")))
 
   (org-babel-do-load-languages
@@ -114,7 +118,9 @@
      (ruby . t))))
 
 (use-package evil-org
-  :after org)
+  :after org
+  :config
+  (evil-org-mode))
 
 (use-package evil-org-agenda
   :after evil-org
@@ -163,10 +169,14 @@
   (general-create-definer leader-define
     :prefix "SPC")
 
+  (leader-define
+    :states 'motion
+    :keymaps 'override
+    "w" evil-window-map)
+
   (leader-define 'normal
     "h" help-map
-    "p" projectile-command-map
-    "w" evil-window-map)
+    "p" projectile-command-map)
 
   (leader-define '(normal visual)
     "SPC" #'counsel-M-x
@@ -240,6 +250,9 @@
 
 (use-package treemacs
   :commands treemacs)
+
+(use-package treemacs-evil
+  :after treemacs)
 
 (when (file-exists-p (concat user-emacs-directory "custom.el"))
   (load-file (concat user-emacs-directory "custom.el")))
