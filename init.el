@@ -77,6 +77,7 @@
 				  org
 				  htmlize
 				  evil-org
+				  gnuplot
 
 				  ;; ui
 				  doom-themes
@@ -115,7 +116,8 @@
    'org-babel-load-languages
    '((emacs-lisp . t)
      (shell . t)
-     (ledger .t )
+     (ledger .t)
+     (gnuplot .t)
      (ruby . t))))
 
 (use-package evil-org
