@@ -35,6 +35,8 @@
 (setq make-backup-files nil
       indent-tabs-mode nil
       auto-save-default nil
+      standard-indent 2
+      js-indent-level 2
       inhibit-startup-screen t
       ring-bell-function 'ignore
       initial-scratch-message (concat initial-scratch-message (concat "emacs-init-time: " (emacs-init-time)))
@@ -44,8 +46,9 @@
 
 (require 'package)
 (setq package-enable-at-startup nil)
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/") t)
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+			 ("melpa" . "https://melpa.org/packages/")
+			 ("org" . "https://orgmode.org/elpa/")))
 (package-initialize)
 
 (setq package-selected-packages '(;; core
@@ -74,8 +77,7 @@
 				  which-key
 
 				  ;; org
-				  org
-				  htmlize
+				  org-plus-contrib
 				  evil-org
 				  gnuplot
 
@@ -85,6 +87,8 @@
 
 				  ;; lang
 				  web-mode
+				  slim-mode
+				  yaml-mode
 
 				  ;; finances
 				  ledger-mode))
@@ -263,8 +267,16 @@
 (use-package ledger-mode
   :mode "\\.ledger\\'")
 
+(use-package slim-mode
+  :mode "\\.slim\\'")
+
+(use-package yaml-mode
+  :mode "\\.yml\\'")
+
 (use-package treemacs
-  :commands treemacs)
+  :commands treemacs
+  :config
+  (treemacs-follow-mode -1))
 
 (use-package treemacs-evil
   :after treemacs)
