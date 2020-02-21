@@ -76,6 +76,11 @@
 				  general
 				  which-key
 
+				  ;; lsp-mode
+				  lsp-mode
+				  company-lsp
+				  lsp-ivy
+
 				  ;; org
 				  org-plus-contrib
 				  evil-org
@@ -106,13 +111,19 @@
 
 (use-package company
   :init
-  (global-company-mode))
+  (global-company-mode)
+  :config
+  (setq company-minimum-prefix-length 1
+	company-idle-delay 0.1))
 
 (use-package org
   :mode ("\\.org\\'" . org-mode)
   :config
   (setq org-confirm-babel-evaluate nil
 	org-agenda-files (list org-directory)
+	org-agenda-skip-scheduled-if-done t
+	org-agenda-skip-deadline-if-done t
+	org-agenda-skip-timestamp-if-done t
 	org-startup-indented t
 	org-todo-keywords '((sequence "TODO(t)" "PROJ(p)" "STRT(s)" "WAIT(w)" "|" "DONE(d)" "KILL(k)")))
 
@@ -288,6 +299,21 @@
 
 (use-package web-mode
   :mode ("\\.erb\\'" . web-mode))
+
+(use-package lsp-mode
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  :init (setq lsp-keymap-prefix "s-l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (ruby-mode . lsp)
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+
+(use-package company-lsp
+  :commands company-lsp)
+
+(use-package lsp-ivy
+  :commands lsp-ivy-workspace-symbol)
 
 (setq custom-file (concat user-emacs-directory "custom.el"))
 

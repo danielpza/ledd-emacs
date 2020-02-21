@@ -2,6 +2,18 @@
 emacs -q -l init.el
 #+end_src
 
+* Installing emacs from source
+#+begin_src sh
+git clone -b master git://git.sv.gnu.org/emacs.git
+#+end_src
+
+** macos
+*** To install the latest version of makeinfo
+brew install texinfo
+brew ln texinfo
+brew ln libxml2
+add export flags to bashrc
+
 * Packages
 
 #+begin_src emacs-lisp
