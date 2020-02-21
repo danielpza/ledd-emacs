@@ -57,6 +57,7 @@
 				  projectile
 				  undotree
 				  company
+				  flycheck
 
 				  ;; treemacs
 				  treemacs
@@ -299,6 +300,9 @@
 
 (use-package web-mode
   :mode ("\\.erb\\'" . web-mode))
+
+(use-package flycheck
+  :init (global-flycheck-mode))
 
 (use-package lsp-mode
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
