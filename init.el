@@ -165,11 +165,6 @@
 	undo-tree-visualizer-timestamps t)
   (global-undo-tree-mode))
 
-(use-package projectile
-  :config
-  (projectile-mode 1)
-  (setq projectile-completion-system 'ivy))
-
 (use-package format-all
   :commands format-all-buffer)
 
@@ -179,7 +174,7 @@
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1))
 
 (use-package evil-magit
-  :after (magit))
+  :after magit)
 
 (use-package general
   :config
@@ -195,8 +190,7 @@
     :prefix "SPC m")
 
   (leader-define 'normal
-    "h" '(:keymap help-map :wk "help")
-    "p" '(:keymap projectile-command-map :wk "projectile"))
+    "h" '(:keymap help-map :wk "help"))
 
   (leader-define
     :states '(normal treemacs)
@@ -277,6 +271,13 @@
    :keymaps 'org-mode-map
    "e" #'org-export-dispatch))
 
+(use-package projectile
+  :config
+  (setq projectile-completion-system 'ivy)
+  (leader-define 'normal
+    "p" '(:keymap projectile-command-map :wk "projectile"))
+  (projectile-mode 1))
+
 (use-package which-key
   :config
   (which-key-mode 1)
@@ -327,8 +328,8 @@
   :hook ((ruby-mode . lsp)
 	 (lsp-mode . lsp-enable-which-key-integration))
   :config
-  (leader-define 'motion
-    "l" lsp-command-map "lsp"))
+  (leader-define 'normal
+    "l" '(:keymap lsp-command-map :wk "lsp")))
 
 (setq custom-file (concat user-emacs-directory "custom.el"))
 
