@@ -110,6 +110,13 @@
 
 (setq use-package-compute-statistics t)
 
+(use-package general
+  :config
+  (general-create-definer leader-define
+    :prefix "SPC")
+  (general-create-definer local-leader-define
+    :prefix "SPC m"))
+
 (use-package company
   :init
   (global-company-mode)
@@ -182,12 +189,6 @@
 
   (general-unbind 'motion
     "SPC")
-
-  (general-create-definer leader-define
-    :prefix "SPC")
-
-  (general-create-definer local-leader-define
-    :prefix "SPC m")
 
   (leader-define 'normal
     "h" '(:keymap help-map :wk "help"))
