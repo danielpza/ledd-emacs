@@ -68,12 +68,13 @@
 				  company
 				  flycheck
 
+				  ;; code
+                                  editorconfig
+				  format-all
+
 				  ;; treemacs
 				  treemacs
 				  treemacs-evil
-
-				  ;; code
-				  format-all
 
 				  ;; also installs ivy and swiper
 				  counsel
@@ -120,10 +121,14 @@
 
 (setq use-package-compute-statistics t)
 
+;; core
+
 (use-package general
   :config
   (general-create-definer leader-define
     :prefix "SPC")
+  (general-create-definer toggle-define
+    :prefix "SPC t")
   (general-create-definer local-leader-define
     :prefix "SPC m"))
 
@@ -131,9 +136,35 @@
   :init
   (global-company-mode)
   :config
-  (setq company-minimum-prefix-length 1
+  (setq company-minimum-prefix-length 0
 	company-idle-delay 0.1))
 
+(use-package undo-tree
+  :config
+  (setq undo-tree-visualizer-diff t
+	undo-tree-visualizer-timestamps t)
+  (global-undo-tree-mode))
+
+;; code helpers
+(use-package format-all
+  :commands format-all-buffer
+  :general
+  (leader-define 'normal
+    :infix "c"
+    "f" #'format-all-buffer))
+
+(use-package editorconfig
+  :config
+  (editorconfig-mode 1))
+
+;; evil
+(use-package evil
+  :init
+  (setq evil-want-C-u-scroll t)
+  :config
+  (evil-mode 1))
+
+;; org
 (use-package org
   :mode ("\\.org\\'" . org-mode)
   :config
@@ -151,7 +182,12 @@
      (shell . t)
      (ledger .t)
      (gnuplot .t)
-     (ruby . t))))
+     (ruby . t)))
+  :general
+  (local-leader-define
+    :states 'normal
+    :keymaps 'org-mode-map
+    "e" #'org-export-dispatch))
 
 (use-package evil-org
   :after org
@@ -163,12 +199,7 @@
   :config
   (evil-org-agenda-set-keys))
 
-(use-package evil
-  :init
-  (setq evil-want-C-u-scroll t)
-  :config
-  (evil-mode 1))
-
+;; ivy
 (use-package ivy
   :config
   (setq ivy-use-virtual-buffers t
@@ -176,20 +207,7 @@
 	ivy-wrap t)
   (ivy-mode 1))
 
-(use-package undo-tree
-  :config
-  (setq undo-tree-visualizer-diff t
-	undo-tree-visualizer-timestamps t)
-  (global-undo-tree-mode))
-
-(use-package format-all
-  :commands format-all-buffer
-  :general
-  (leader-define 'normal
-    :infix "c"
-    "f" #'format-all-buffer)
-  )
-
+;; magit
 (use-package magit
   :commands magit-status
   :config
@@ -198,6 +216,7 @@
 (use-package evil-magit
   :after magit)
 
+;; keybindings
 (use-package general
   :config
   (general-define-key "M-x" #'counsel-M-x)
@@ -278,10 +297,7 @@
     "n" #'next-buffer
     "s" #'open-scratch-buffer)
 
-  (local-leader-define
-    :states 'normal
-    :keymaps 'org-mode-map
-    "e" #'org-export-dispatch))
+  )
 
 (use-package projectile
   :config
