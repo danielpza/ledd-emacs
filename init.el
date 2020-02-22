@@ -181,9 +181,6 @@
 (use-package evil-magit
   :after (magit))
 
-(use-package flycheck
-  :init (global-flycheck-mode))
-
 (use-package general
   :config
   (general-define-key "M-x" #'counsel-M-x)
@@ -198,9 +195,8 @@
     :prefix "SPC m")
 
   (leader-define 'normal
-    "h" help-map
-    "p" projectile-command-map
-    "c" flycheck-command-map)
+    "h" '(:keymap help-map :wk "help")
+    "p" '(:keymap projectile-command-map :wk "projectile"))
 
   (leader-define
     :states '(normal treemacs)
@@ -225,6 +221,7 @@
 
   (leader-define 'normal
     :infix "f"
+    "" '(:ignore t :which-key "file")
     "t" #'treemacs
     "p" #'find-init-file
     "r" #'counsel-recentf
@@ -234,33 +231,39 @@
   ;; toggle
   (leader-define 'normal
     :infix "t"
+    "" '(:ignore t :which-key "toggle")
     "t" #'treemacs
     "w" #'whitespace-mode
     "u" #'undo-tree-visualize)
 
   (leader-define 'normal
     :infix "s"
+    "" '(:ignore t :which-key "search")
     "b" #'counsel-grep-or-swiper
     "p" #'counsel-rg)
 
   (leader-define '(normal visual)
     :infix "g"
+    "" '(:ignore t :which-key "magit")
     "g" #'magit-status
     "db" #'magit-diff-buffer-file
     "lb" #'magit-log-buffer-file)
 
   (leader-define 'normal
     :infix "o"
+    "" '(:ignore t :which-key "open")
     "a" #'org-agenda
     "d" #'dired)
 
   (leader-define '(normal visual)
     :infix "e"
+    "" '(:ignore t :which-key "eval")
     "i" #'eval-init-file
     "b" #'eval-buffer)
 
   (leader-define 'normal
     :infix "b"
+    "" '(:ignore t :which-key "buffer")
     "k" #'kill-current-buffer
     "e" #'eval-buffer
     "b" #'ivy-switch-buffer
@@ -307,20 +310,25 @@
 (use-package web-mode
   :mode ("\\.erb\\'" . web-mode))
 
-(use-package lsp-mode
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  :init (setq lsp-keymap-prefix "s-l")
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (ruby-mode . lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
-
 (use-package company-lsp
   :commands company-lsp)
 
 (use-package lsp-ivy
   :commands lsp-ivy-workspace-symbol)
+
+(use-package flycheck
+  :init (global-flycheck-mode)
+  :config
+  (leader-define 'normal
+    "c" flycheck-command-map))
+
+(use-package lsp-mode
+  :commands lsp
+  :hook ((ruby-mode . lsp)
+	 (lsp-mode . lsp-enable-which-key-integration))
+  :config
+  (leader-define 'motion
+    "l" lsp-command-map "lsp"))
 
 (setq custom-file (concat user-emacs-directory "custom.el"))
 
