@@ -4,21 +4,30 @@
 
 ;; functions
 
+; https://emacs.stackexchange.com/a/10349
+(defun revert-buffer-no-confirm ()
+  "Revert buffer without confirmation."
+  (interactive) (revert-buffer t t))
+
 (defun open-scratch-buffer ()
+  "Open scratch buffer."
   (interactive)
   (switch-to-buffer (get-buffer-create "*scratch*")))
 
 (defun refresh-packages ()
+  "Refresh and install packages."
   (interactive)
   (package-refresh-contents)
   (package-install-selected-packages)
   (package-autoremove))
 
 (defun find-init-file ()
+  "Go to init file (ie this one)."
   (interactive)
   (find-file user-init-file))
 
 (defun eval-init-file ()
+  "Eval init file (ie this one)."
   (interactive)
   (load-file user-init-file))
 
@@ -173,7 +182,12 @@
   (global-undo-tree-mode))
 
 (use-package format-all
-  :commands format-all-buffer)
+  :commands format-all-buffer
+  :general
+  (leader-define 'normal
+    :infix "c"
+    "f" #'format-all-buffer)
+  )
 
 (use-package magit
   :commands magit-status
@@ -205,10 +219,6 @@
 
   (leader-define 'visual
     ";" #'comment-dwim)
-
-  (leader-define 'normal
-    :infix "c"
-    "f" #'format-all-buffer)
 
   (leader-define 'normal
     :infix "d"
@@ -262,7 +272,7 @@
     "k" #'kill-current-buffer
     "e" #'eval-buffer
     "b" #'ivy-switch-buffer
-    "r" #'revert-buffer
+    "r" #'revert-buffer-no-confirm
     "p" #'previous-buffer
     "n" #'next-buffer
     "s" #'open-scratch-buffer)
@@ -322,7 +332,10 @@
   :init (global-flycheck-mode)
   :config
   (leader-define 'normal
-    "c" flycheck-command-map))
+    "e n" 'flycheck-next-error
+    "e p" 'flycheck-previous-error
+    "c F" flycheck-command-map)
+  )
 
 (use-package lsp-mode
   :commands lsp
