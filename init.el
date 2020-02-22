@@ -268,9 +268,9 @@
     "s" #'open-scratch-buffer)
 
   (local-leader-define
-   :states 'normal
-   :keymaps 'org-mode-map
-   "e" #'org-export-dispatch))
+    :states 'normal
+    :keymaps 'org-mode-map
+    "e" #'org-export-dispatch))
 
 (use-package projectile
   :config
