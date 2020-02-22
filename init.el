@@ -4,7 +4,7 @@
 
 ;; functions
 
-; https://emacs.stackexchange.com/a/10349
+;; https://emacs.stackexchange.com/a/10349
 (defun revert-buffer-no-confirm ()
   "Revert buffer without confirmation."
   (interactive) (revert-buffer t t))
@@ -101,6 +101,7 @@
 				  all-the-icons
 
 				  ;; lang
+				  typescript-mode
 				  web-mode
 				  slim-mode
 				  yaml-mode
@@ -322,14 +323,10 @@
 (use-package web-mode
   :mode ("\\.erb\\'" . web-mode))
 
-(use-package company-lsp
-  :commands company-lsp)
-
-(use-package lsp-ivy
-  :commands lsp-ivy-workspace-symbol)
-
 (use-package flycheck
-  :init (global-flycheck-mode)
+  :init
+  (global-flycheck-mode)
+
   :config
   (leader-define 'normal
     "e n" 'flycheck-next-error
@@ -337,9 +334,16 @@
     "c F" flycheck-command-map)
   )
 
+(use-package company-lsp
+  :commands company-lsp)
+
+(use-package lsp-ivy
+  :commands lsp-ivy-workspace-symbol)
+
 (use-package lsp-mode
   :commands lsp
   :hook ((ruby-mode . lsp)
+	 (typescript-mode . lsp)
 	 (lsp-mode . lsp-enable-which-key-integration))
   :config
   (leader-define 'normal
