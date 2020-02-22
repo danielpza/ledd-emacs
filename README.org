@@ -7,12 +7,21 @@ emacs -q -l init.el
 git clone -b master git://git.sv.gnu.org/emacs.git
 #+end_src
 
-** macos
-*** To install the latest version of makeinfo
+** To install the latest version of makeinfo
+
+#+begin_src sh
+# macos
 brew install texinfo
 brew ln texinfo
 brew ln libxml2
 add export flags to bashrc
+
+# fedora
+dnf instal texinfo
+
+# ubuntu
+sudo apt install texinfo
+#+end_src
 
 * Packages
 
