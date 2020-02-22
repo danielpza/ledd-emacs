@@ -181,6 +181,9 @@
 (use-package evil-magit
   :after (magit))
 
+(use-package flycheck
+  :init (global-flycheck-mode))
+
 (use-package general
   :config
   (general-define-key "M-x" #'counsel-M-x)
@@ -196,7 +199,8 @@
 
   (leader-define 'normal
     "h" help-map
-    "p" projectile-command-map)
+    "p" projectile-command-map
+    "c" flycheck-command-map)
 
   (leader-define
     :states '(normal treemacs)
@@ -274,6 +278,8 @@
   :config
   (which-key-mode 1)
   (push '((nil . "projectile-\\(.+\\)") . (nil . "\\1"))
+	which-key-replacement-alist)
+  (push '((nil . "flycheck-\\(.+\\)") . (nil . "\\1"))
 	which-key-replacement-alist))
 
 (use-package ledger-mode
@@ -300,9 +306,6 @@
 
 (use-package web-mode
   :mode ("\\.erb\\'" . web-mode))
-
-(use-package flycheck
-  :init (global-flycheck-mode))
 
 (use-package lsp-mode
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
