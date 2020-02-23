@@ -380,7 +380,8 @@
 
 ;; lang
 (use-package typescript-mode
-  :mode "\\.tsx?\\'"
+  :straight t
+  :mode "\\.tsx?\\'" "\\.index.d.ts\\'"
   :hook (typescript-mode . lsp))
 
 (add-hook 'js-mode-hook #'lsp)
