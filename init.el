@@ -380,6 +380,20 @@
   (require 'sublimity-scroll)
   (sublimity-mode 1))
 
+(use-package diff-hl
+  :straight t
+  :config
+  (diff-hl-margin-mode)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+  :general
+  (leader-define
+    :states '(normal visual)
+    :keymaps 'override
+    "g [" #'diff-hl-previous-hunk
+    "g ]" #'diff-hl-next-hunk
+    )
+  )
+
 ;; lang
 (use-package typescript-mode
   :straight t
