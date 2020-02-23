@@ -1,3 +1,5 @@
+* Try it
+
 #+begin_src sh
 emacs -q -l init.el
 #+end_src
@@ -22,26 +24,6 @@ dnf instal texinfo
 # ubuntu
 sudo apt install texinfo
 #+end_src
-
-* Packages
-
-#+begin_src emacs-lisp
-(describe-package)
-
-package-activated-list
-#+end_src
-
-* Update packages
-
-#+begin_src emacs-lisp
-(package-refresh-contents)
-
-(list-packages)
-#+end_src
-
-#+begin_example
-U x
-#+end_example
 
 * Keybindings
 
