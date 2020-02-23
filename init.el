@@ -320,6 +320,19 @@
   :straight t
   :config (doom-modeline-mode 1))
 
+(use-package centaur-tabs
+  :straight t
+  :demand
+  :init
+  :config
+  (setq centaur-tabs-style "rounded")
+  (centaur-tabs-mode t)
+  :general
+  (general-define-key
+   :keymaps 'override
+   [C-iso-lefttab] #'centaur-tabs-backward
+   [C-tab] #'centaur-tabs-forward))
+
 
 ;; lang
 (use-package typescript-mode
