@@ -110,6 +110,10 @@
   :config
   (editorconfig-mode 1))
 
+(use-package format-all
+  :straight t
+  :commands format-all-buffer)
+
 ;; magit
 (use-package magit
   :straight t
@@ -122,15 +126,22 @@
   :straight t)
 
 ;; editor
-(use-package counsel :straight t)
+(use-package counsel
+  :straight t)
+
+(use-package ivy
+  :straight t
+  :config
+  (setq ivy-use-virtual-buffers t
+	ivy-height 20
+	ivy-wrap t)
+  (ivy-mode 1))
+
 (use-package which-key
   :straight t
   :config
   (which-key-mode 1))
 
-(use-package format-all
-  :straight t
-  :commands format-all-buffer)
 
 ;; general keybindings
 (use-package general
@@ -140,6 +151,7 @@
     :keymaps 'override
     "SPC" 'counsel-M-x
 
+    "TAB" #'evil-switch-to-windows-last-buffer
     ";" #'evilnc-comment-or-uncomment-lines
 
     ;; window
@@ -184,39 +196,9 @@
   (doom-themes-treemacs-config)
   (load-theme 'doom-dark+ t))
 
-;; ;; ivy
-;; (use-package ivy
-;;   :config
-;;   (setq ivy-use-virtual-buffers t
-;; 	ivy-height 20
-;; 	ivy-wrap t)
-;;   (ivy-mode 1))
-
-
 ;; ;; keybindings
 ;; (use-package general
 ;;   :config
-;;   (general-define-key "M-x" #'counsel-M-x)
-
-;;   (general-unbind '(motion magit-status-mode-map)
-;;     "SPC")
-
-;;   (leader-define 'normal
-;;     "h" '(:keymap help-map :wk "help"))
-
-;;   (leader-define
-;;     :states '(normal treemacs)
-;;     "w" evil-window-map)
-
-;;   (leader-define 'motion
-;;     "SPC" #'counsel-M-x
-;;     ":" #'counsel-M-x
-;;     "TAB" #'evil-switch-to-windows-last-buffer
-;;     "/" #'counsel-rg)
-
-;;   (leader-define 'visual
-;;     ";" #'comment-dwim)
-
 ;;   (leader-define 'normal
 ;;     :infix "f"
 ;;     "" '(:ignore t :which-key "file")
