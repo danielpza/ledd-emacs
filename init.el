@@ -138,14 +138,29 @@
     :states '(normal visual)
     :keymaps 'override
     "SPC" 'counsel-M-x
-    )
-  )
 
-;; (use-package undo-tree
-;;   :config
-;;   (setq undo-tree-visualizer-diff t
-;; 	undo-tree-visualizer-timestamps t)
-;;   (global-undo-tree-mode))
+    ;; file
+    "f t" #'treemacs
+    "f p" #'find-init-file
+    "f r" #'counsel-recentf
+    "f f" #'counsel-find-file
+    "f s" #'save-buffer
+
+    ;; search
+    "s b" #'counsel-grep-or-swiper
+    "s p" #'counsel-rg
+
+    ;; git
+    "g g" #'magit-status
+    ))
+
+;; ui
+(use-package doom-themes
+  :straight
+  :config
+  (setq doom-themes-treemacs-theme "doom-colors")
+  (doom-themes-treemacs-config)
+  (load-theme 'doom-dark+ t))
 
 ;; ;; code helpers
 ;; (use-package format-all
@@ -159,41 +174,6 @@
 ;;   :config
 ;;   (editorconfig-mode 1))
 
-
-;; ;; org
-;; (use-package org
-;;   :mode ("\\.org\\'" . org-mode)
-;;   :config
-;;   (setq org-confirm-babel-evaluate nil
-;; 	org-agenda-files (list org-directory)
-;; 	org-agenda-skip-scheduled-if-done t
-;; 	org-agenda-skip-deadline-if-done t
-;; 	org-agenda-skip-timestamp-if-done t
-;; 	org-startup-indented t
-;; 	org-todo-keywords '((sequence "TODO(t)" "PROJ(p)" "STRT(s)" "WAIT(w)" "|" "DONE(d)" "KILL(k)")))
-
-;;   (org-babel-do-load-languages
-;;    'org-babel-load-languages
-;;    '((emacs-lisp . t)
-;;      (shell . t)
-;;      (ledger .t)
-;;      (gnuplot .t)
-;;      (ruby . t)))
-;;   :general
-;;   (local-leader-define
-;;     :states 'normal
-;;     :keymaps 'org-mode-map
-;;     "e" #'org-export-dispatch))
-
-;; (use-package evil-org
-;;   :after org
-;;   :config
-;;   (evil-org-mode))
-
-;; (use-package evil-org-agenda
-;;   :after evil-org
-;;   :config
-;;   (evil-org-agenda-set-keys))
 
 ;; ;; ivy
 ;; (use-package ivy
