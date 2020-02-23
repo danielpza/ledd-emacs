@@ -14,13 +14,6 @@
   (interactive)
   (switch-to-buffer (get-buffer-create "*scratch*")))
 
-(defun refresh-packages ()
-  "Refresh and install packages."
-  (interactive)
-  (package-refresh-contents)
-  (package-install-selected-packages)
-  (package-autoremove))
-
 (defun find-init-file ()
   "Go to init file (ie this one)."
   (interactive)
