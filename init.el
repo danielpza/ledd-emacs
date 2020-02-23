@@ -364,7 +364,7 @@
   :hook ((ruby-mode . lsp)
 	 (typescript-mode . lsp)
 	 (lsp-mode . lsp-enable-which-key-integration))
-  :config
+  :general
   (leader-define 'normal
     "l" '(:keymap lsp-command-map :wk "lsp")))
 
