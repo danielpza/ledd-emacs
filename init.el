@@ -63,6 +63,7 @@
 (setq package-selected-packages '(;; core
 				  use-package
 				  evil
+                                  evil-collection
 				  projectile
 				  undotree
 				  company
@@ -166,6 +167,10 @@
   (setq evil-want-C-u-scroll t)
   :config
   (evil-mode 1))
+
+(use-package evil-collection
+  :config
+  (evil-collection-init))
 
 ;; org
 (use-package org
@@ -345,12 +350,13 @@
 (use-package treemacs-magit
   :after treemacs magit)
 
-
+;; ui
 (use-package doom-themes
   :config
   (setq doom-themes-treemacs-theme "doom-colors")
   (doom-themes-treemacs-config))
 
+;; lang
 (use-package web-mode
   :mode ("\\.erb\\'" . web-mode))
 
