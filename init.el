@@ -221,32 +221,6 @@
 (use-package all-the-icons
   :straight t)
 
-(use-package treemacs
-  :straight t
-  :commands treemacs
-  :config
-  (setq treemacs-follow-after-init t
-	treemacs-is-never-other-window t
-	treemacs-sorting 'alphabetic-case-insensitive-asc)
-  (treemacs-follow-mode 1))
-
-(use-package treemacs-evil
-  :straight t
-  :after treemacs evil)
-
-(use-package treemacs-projectile
-  :straight t
-  :after treemacs projectile)
-
-(use-package treemacs-icons-dired
-  :straight t
-  :after treemacs dired all-the-icons
-  :config (treemacs-icons-dired-mode))
-
-(use-package treemacs-magit
-  :straight t
-  :after treemacs magit)
-
 ;; keybindings
 (use-package general
   :general
@@ -338,6 +312,32 @@
   )
 
 ;; ui
+(use-package treemacs
+  :straight t
+  :commands treemacs
+  :config
+  (setq treemacs-follow-after-init t
+	treemacs-is-never-other-window t
+	treemacs-sorting 'alphabetic-case-insensitive-asc)
+  (treemacs-follow-mode 1))
+
+(use-package treemacs-evil
+  :straight t
+  :after treemacs evil)
+
+(use-package treemacs-projectile
+  :straight t
+  :after treemacs projectile)
+
+(use-package treemacs-icons-dired
+  :straight t
+  :after treemacs dired all-the-icons
+  :config (treemacs-icons-dired-mode))
+
+(use-package treemacs-magit
+  :straight t
+  :after treemacs magit)
+
 (use-package doom-themes
   :straight t
   :config
