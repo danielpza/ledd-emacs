@@ -34,6 +34,11 @@
           (delete-file (buffer-file-name)))))
     (kill-buffer (current-buffer))))
 
+(defun projectile-toggle-eshell ()
+  "Open or hide projectile eshell."
+  (interactive)
+  (call-interactively (if (eq major-mode 'eshell-mode) 'bury-buffer 'projectile-run-eshell)))
+
 ;; helpers
 
 ;; from doom
@@ -250,6 +255,10 @@
   (general-define-key
    :states 'insert
    "C-SPC"    #'company-complete)
+  (general-define-key
+    :states '(normal insert)
+   :keymaps 'override
+   "C-t"    #'projectile-toggle-eshell)
 
   (leader-define
     :states '(normal visual)
