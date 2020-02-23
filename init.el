@@ -241,16 +241,19 @@
    :keymap company-search-map
    "C-j"     #'company-select-next-or-abort
    "C-k"     #'company-select-previous-or-abort)
-
   ;; general keybindings
   (general-define-key
    :states 'insert
    "C-SPC"    #'company-complete)
   (general-define-key
-   :states '(normal insert)
+   :states '(normal insert visual)
    :keymaps 'override
    "C-t"    #'projectile-toggle-eshell
-   "C-w"    #'kill-current-buffer)
+   "C-w"    #'kill-current-buffer
+   "C-S-X"     #'kill-region
+   "C-S-C"     #'kill-ring-save
+   "C-S-V"     #'yank
+   "C-s"   #'save-buffer)
 
   (leader-define
     :states '(normal visual)
