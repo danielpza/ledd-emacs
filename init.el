@@ -123,6 +123,25 @@
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
   (global-flycheck-mode))
 
+;; code/lsp
+(use-package lsp-mode
+  :straight t
+  :commands lsp
+  :hook
+  (lsp-mode . lsp-enable-which-key-integration))
+
+(use-package company-lsp
+  :straight t
+  :after lsp-mode company
+  :commands company-lsp
+  :config
+  (setq company-minimum-prefix-length 1
+	company-idle-delay 0.0))
+
+(use-package lsp-ivy
+  :straight t
+  :commands (lsp-ivy-workspace-symbol lsp-ivy-global-workspace-symbol))
+
 (use-package editorconfig
   :straight t
   :config
@@ -180,6 +199,7 @@
    "C-k"    #'previous-line)
   (general-define-key
    :keymap company-active-map
+   "RET"     nil
    "C-j"     #'company-select-next
    "C-k"     #'company-select-previous)
   (general-define-key
@@ -242,6 +262,9 @@
     "g g" #'magit-status
     "g d b" #'magit-diff-buffer-file
     "g l b" #'magit-log-buffer-file
+
+    ;; lsp
+    "l" #'lsp-command-map
     )
   )
 
@@ -254,9 +277,9 @@
   (load-theme 'doom-dark+ t))
 
 ;; lang
-
 (use-package typescript-mode
-  :straight t)
+  :straight t
+  :hook (typescript-mode . lsp))
 
 ;; ;; treemacs
 ;; (use-package treemacs
@@ -276,32 +299,3 @@
 
 ;; (use-package treemacs-magit
 ;;   :after treemacs magit)
-
-;; ;; lang
-;; (use-package web-mode
-;;   :mode ("\\.erb\\'" . web-mode))
-
-
-;; (use-package company-lsp
-;;   :commands company-lsp)
-
-;; (use-package lsp-ivy
-;;   :commands lsp-ivy-workspace-symbol)
-
-;; (use-package typescript-mode
-;;   :mode ("\\.jsx?\\'" "\\.tsx?\\'"))
-
-;; (use-package lsp-mode
-;;   :commands lsp
-;;   :hook ((ruby-mode . lsp)
-;; 	 (typescript-mode . lsp)
-;; 	 (lsp-mode . lsp-enable-which-key-integration))
-;;   :general
-;;   (leader-define 'normal
-;;     "l" '(:keymap lsp-command-map :wk "lsp")))
-
-;; (setq custom-file (concat user-emacs-directory "custom.el"))
-
-;; ;; remove when not calling emacs with -q
-;; (when (file-exists-p custom-file)
-;;   (load-file custom-file))
