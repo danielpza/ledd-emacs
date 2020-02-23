@@ -256,9 +256,10 @@
    :states 'insert
    "C-SPC"    #'company-complete)
   (general-define-key
-    :states '(normal insert)
+   :states '(normal insert)
    :keymaps 'override
-   "C-t"    #'projectile-toggle-eshell)
+   "C-t"    #'projectile-toggle-eshell
+   "C-w"    #'kill-current-buffer)
 
   (leader-define
     :states '(normal visual)
