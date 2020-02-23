@@ -281,6 +281,7 @@
     ;; code
     "c f" #'format-all-buffer
     "c F" flycheck-command-map
+    "c p" #'counsel-yank-pop
 
     ;; buffer
     "b d" #'kill-current-buffer
