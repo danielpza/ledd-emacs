@@ -53,8 +53,9 @@
       auto-save-default nil
       standard-indent 2
       js-indent-level 2
-      ;; inhibit-startup-screen t
+      inhibit-startup-screen t
       ring-bell-function 'ignore
+      initial-scratch-message (concat initial-scratch-message (concat "emacs-init-time: " (emacs-init-time)))
       debug-on-error t)
 
 ;;+straight
@@ -114,10 +115,13 @@
 (use-package company
   :straight t
   :config
-  (global-company-mode)
-  ;; (setq company-minimum-prefix-length 1
-  ;; 	company-idle-delay 1)
-  )
+  (global-company-mode))
+
+(use-package flycheck
+  :straight t
+  :config
+  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+  (global-flycheck-mode))
 
 (use-package editorconfig
   :straight t
@@ -208,6 +212,7 @@
 
     ;; code
     "c f" #'format-all-buffer
+    "c F" flycheck-command-map
 
     ;; buffer
     "b d" #'kill-current-buffer
@@ -217,6 +222,10 @@
     "b p" #'previous-buffer
     "b n" #'next-buffer
     "b s" #'open-scratch-buffer
+
+    ;; error
+    "e n" 'flycheck-next-error
+    "e p" 'flycheck-previous-error
 
     ;; file
     "f t" #'treemacs
@@ -244,23 +253,10 @@
   (doom-themes-treemacs-config)
   (load-theme 'doom-dark+ t))
 
+;; lang
 
-;; (use-package which-key
-;;   :config
-;;   (which-key-mode 1)
-;;   (push '((nil . "projectile-\\(.+\\)") . (nil . "\\1"))
-;; 	which-key-replacement-alist)
-;;   (push '((nil . "flycheck-\\(.+\\)") . (nil . "\\1"))
-;; 	which-key-replacement-alist))
-
-;; (use-package ledger-mode
-;;   :mode "\\.ledger\\'")
-
-;; (use-package slim-mode
-;;   :mode "\\.slim\\'")
-
-;; (use-package yaml-mode
-;;   :mode "\\.yml\\'")
+(use-package typescript-mode
+  :straight t)
 
 ;; ;; treemacs
 ;; (use-package treemacs
@@ -281,26 +277,10 @@
 ;; (use-package treemacs-magit
 ;;   :after treemacs magit)
 
-;; ;; ui
-;; (use-package doom-themes
-;;   :config
-;;   (setq doom-themes-treemacs-theme "doom-colors")
-;;   (doom-themes-treemacs-config))
-
 ;; ;; lang
 ;; (use-package web-mode
 ;;   :mode ("\\.erb\\'" . web-mode))
 
-;; (use-package flycheck
-;;   :init
-;;   (global-flycheck-mode)
-
-;;   :config
-;;   (leader-define 'normal
-;;     "e n" 'flycheck-next-error
-;;     "e p" 'flycheck-previous-error
-;;     "c F" flycheck-command-map)
-;;   )
 
 ;; (use-package company-lsp
 ;;   :commands company-lsp)
@@ -325,53 +305,3 @@
 ;; ;; remove when not calling emacs with -q
 ;; (when (file-exists-p custom-file)
 ;;   (load-file custom-file))
-
-;; ;;; :completion
-;; (map! (:when (featurep! :completion company)
-;;         :i "C-@"      #'+company/complete
-;;         :i "C-SPC"    #'+company/complete
-;;       (:when (featurep! :completion ivy)
-;;         (:after ivy
-;;           :map ivy-minibuffer-map
-;;           "C-SPC" #'ivy-call-and-recenter  ; preview file
-;;           "C-l"   #'ivy-alt-done
-;;           "C-v"   #'yank)
-;;         (:after counsel
-;;           :map counsel-ag-map
-;;           "C-SPC"    #'ivy-call-and-recenter ; preview
-;;           "C-l"      #'ivy-done
-;;           [C-return] #'+ivy/git-grep-other-window-action))
-
-;;       (:when (featurep! :completion helm)
-;;         (:after helm :map helm-map
-;;           [left]     #'left-char
-;;           [right]    #'right-char
-;;           "C-S-f"    #'helm-previous-page
-;;           "C-S-n"    #'helm-next-source
-;;           "C-S-p"    #'helm-previous-source
-;;           "C-S-j"    #'helm-next-source
-;;           "C-S-k"    #'helm-previous-source
-;;           "C-j"      #'helm-next-line
-;;           "C-k"      #'helm-previous-line
-;;           "C-u"      #'helm-delete-minibuffer-contents
-;;           "C-s"      #'helm-minibuffer-history
-;;           ;; Swap TAB and C-z
-;;           "TAB"      #'helm-execute-persistent-action
-;;           [tab]      #'helm-execute-persistent-action
-;;           "C-z"      #'helm-select-action)
-;;         (:after helm-ag :map helm-ag-map
-;;           "C--"      #'+helm-do-ag-decrease-context
-;;           "C-="      #'+helm-do-ag-increase-context
-;;           [left]     nil
-;;           [right]    nil)
-;;         (:after helm-files :map (helm-find-files-map helm-read-file-map)
-;;           [C-return] #'helm-ff-run-switch-other-window
-;;           "C-w"      #'helm-find-files-up-one-level)
-;;         (:after helm-locate :map helm-generic-files-map
-;;           [C-return] #'helm-ff-run-switch-other-window)
-;;         (:after helm-buffers :map helm-buffer-map
-;;           [C-return] #'helm-buffer-switch-other-window)
-;;         (:after helm-occur :map helm-occur-map
-;;           [C-return] #'helm-occur-run-goto-line-ow)
-;;         (:after helm-grep :map helm-grep-map
-;;           [C-return] #'helm-grep-run-other-window-action)))
