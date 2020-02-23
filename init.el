@@ -92,6 +92,10 @@
   :config
   (evil-collection-init))
 
+(use-package evil-nerd-commenter
+  :straight t
+  :after evil)
+
 ;; code
 (use-package company
   :straight t
@@ -124,6 +128,10 @@
   :config
   (which-key-mode 1))
 
+(use-package format-all
+  :straight t
+  :commands format-all-buffer)
+
 ;; general keybindings
 (use-package general
   :general
@@ -131,6 +139,27 @@
     :states '(normal visual)
     :keymaps 'override
     "SPC" 'counsel-M-x
+
+    ";" #'evilnc-comment-or-uncomment-lines
+
+    ;; window
+    "w" evil-window-map
+    "w d" #'evil-window-delete
+
+    ;; help
+    "h" help-map
+
+    ;; code
+    "c f" #'format-all-buffer
+
+    ;; buffer
+    "b d" #'kill-current-buffer
+    "b e" #'eval-buffer
+    "b b" #'ivy-switch-buffer
+    "b r" #'revert-buffer-no-confirm
+    "b p" #'previous-buffer
+    "b n" #'next-buffer
+    "b s" #'open-scratch-buffer
 
     ;; file
     "f t" #'treemacs
@@ -154,19 +183,6 @@
   (setq doom-themes-treemacs-theme "doom-colors")
   (doom-themes-treemacs-config)
   (load-theme 'doom-dark+ t))
-
-;; ;; code helpers
-;; (use-package format-all
-;;   :commands format-all-buffer
-;;   :general
-;;   (leader-define 'normal
-;;     :infix "c"
-;;     "f" #'format-all-buffer))
-
-;; (use-package editorconfig
-;;   :config
-;;   (editorconfig-mode 1))
-
 
 ;; ;; ivy
 ;; (use-package ivy
@@ -200,10 +216,6 @@
 
 ;;   (leader-define 'visual
 ;;     ";" #'comment-dwim)
-
-;;   (leader-define 'normal
-;;     :infix "d"
-;;     "r" #'refresh-packages)
 
 ;;   (leader-define 'normal
 ;;     :infix "f"
