@@ -24,6 +24,20 @@
   (interactive)
   (load-file user-init-file))
 
+;; helpers
+
+;; from doom
+(defconst minibuffer-maps
+  `(minibuffer-local-map
+    minibuffer-local-ns-map
+    minibuffer-local-completion-map
+    minibuffer-local-must-match-map
+    minibuffer-local-isearch-map
+    read-expression-map
+    ivy-minibuffer-map
+    ivy-switch-buffer-map)
+  "A list of all the keymaps used for the minibuffer.")
+
 ;; defaults
 
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -142,11 +156,24 @@
   :config
   (which-key-mode 1))
 
+(use-package projectile
+  :straight t
+  :config
+  (setq projectile-completion-system 'ivy)
+  (projectile-mode 1))
 
+
+;; keybindings
 (use-package general
   :general
 
   ;; transient states
+  (general-define-key
+   :keymaps minibuffer-maps
+   "C-r"    #'evil-paste-from-register
+   "C-v"    #'yank
+   "C-j"    #'next-line
+   "C-k"    #'previous-line)
   (general-define-key
    :keymap company-active-map
    "C-j"     #'company-select-next
@@ -168,6 +195,9 @@
 
     "TAB" #'evil-switch-to-windows-last-buffer
     ";" #'evilnc-comment-or-uncomment-lines
+
+    ;; projectile
+    "p" projectile-command-map
 
     ;; window
     "w" evil-window-map
@@ -214,12 +244,6 @@
   (doom-themes-treemacs-config)
   (load-theme 'doom-dark+ t))
 
-;; (use-package projectile
-;;   :config
-;;   (setq projectile-completion-system 'ivy)
-;;   (leader-define 'normal
-;;     "p" '(:keymap projectile-command-map :wk "projectile"))
-;;   (projectile-mode 1))
 
 ;; (use-package which-key
 ;;   :config
@@ -301,3 +325,53 @@
 ;; ;; remove when not calling emacs with -q
 ;; (when (file-exists-p custom-file)
 ;;   (load-file custom-file))
+
+;; ;;; :completion
+;; (map! (:when (featurep! :completion company)
+;;         :i "C-@"      #'+company/complete
+;;         :i "C-SPC"    #'+company/complete
+;;       (:when (featurep! :completion ivy)
+;;         (:after ivy
+;;           :map ivy-minibuffer-map
+;;           "C-SPC" #'ivy-call-and-recenter  ; preview file
+;;           "C-l"   #'ivy-alt-done
+;;           "C-v"   #'yank)
+;;         (:after counsel
+;;           :map counsel-ag-map
+;;           "C-SPC"    #'ivy-call-and-recenter ; preview
+;;           "C-l"      #'ivy-done
+;;           [C-return] #'+ivy/git-grep-other-window-action))
+
+;;       (:when (featurep! :completion helm)
+;;         (:after helm :map helm-map
+;;           [left]     #'left-char
+;;           [right]    #'right-char
+;;           "C-S-f"    #'helm-previous-page
+;;           "C-S-n"    #'helm-next-source
+;;           "C-S-p"    #'helm-previous-source
+;;           "C-S-j"    #'helm-next-source
+;;           "C-S-k"    #'helm-previous-source
+;;           "C-j"      #'helm-next-line
+;;           "C-k"      #'helm-previous-line
+;;           "C-u"      #'helm-delete-minibuffer-contents
+;;           "C-s"      #'helm-minibuffer-history
+;;           ;; Swap TAB and C-z
+;;           "TAB"      #'helm-execute-persistent-action
+;;           [tab]      #'helm-execute-persistent-action
+;;           "C-z"      #'helm-select-action)
+;;         (:after helm-ag :map helm-ag-map
+;;           "C--"      #'+helm-do-ag-decrease-context
+;;           "C-="      #'+helm-do-ag-increase-context
+;;           [left]     nil
+;;           [right]    nil)
+;;         (:after helm-files :map (helm-find-files-map helm-read-file-map)
+;;           [C-return] #'helm-ff-run-switch-other-window
+;;           "C-w"      #'helm-find-files-up-one-level)
+;;         (:after helm-locate :map helm-generic-files-map
+;;           [C-return] #'helm-ff-run-switch-other-window)
+;;         (:after helm-buffers :map helm-buffer-map
+;;           [C-return] #'helm-buffer-switch-other-window)
+;;         (:after helm-occur :map helm-occur-map
+;;           [C-return] #'helm-occur-run-goto-line-ow)
+;;         (:after helm-grep :map helm-grep-map
+;;           [C-return] #'helm-grep-run-other-window-action)))
