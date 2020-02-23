@@ -178,7 +178,7 @@
 
 ;; ui
 (use-package doom-themes
-  :straight
+  :straight t
   :config
   (setq doom-themes-treemacs-theme "doom-colors")
   (doom-themes-treemacs-config)
