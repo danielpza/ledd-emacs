@@ -312,4 +312,5 @@
 ;; lang
 (use-package typescript-mode
   :straight t
+  :mode ("\\.jsx?\\'" "\\.tsx?\\'")
   :hook (typescript-mode . lsp))
