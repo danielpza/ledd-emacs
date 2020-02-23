@@ -75,6 +75,9 @@
 				  ;; treemacs
 				  treemacs
 				  treemacs-evil
+				  treemacs-projectile
+				  treemacs-magit
+				  treemacs-icons-dired
 
 				  ;; also installs ivy and swiper
 				  counsel
@@ -323,13 +326,25 @@
 (use-package yaml-mode
   :mode "\\.yml\\'")
 
+;; treemacs
 (use-package treemacs
   :commands treemacs
   :config
-  (treemacs-follow-mode -1))
+  (treemacs-follow-mode 1))
 
 (use-package treemacs-evil
-  :after treemacs)
+  :after treemacs evil)
+
+(use-package treemacs-projectile
+  :after treemacs projectile)
+
+(use-package treemacs-icons-dired
+  :after treemacs dired
+  :config (treemacs-icons-dired-mode))
+
+(use-package treemacs-magit
+  :after treemacs magit)
+
 
 (use-package doom-themes
   :config
