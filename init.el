@@ -356,6 +356,9 @@
 (use-package lsp-ivy
   :commands lsp-ivy-workspace-symbol)
 
+(use-package typescript-mode
+  :mode ("\\.jsx?\\'" "\\.tsx?\\'"))
+
 (use-package lsp-mode
   :commands lsp
   :hook ((ruby-mode . lsp)
