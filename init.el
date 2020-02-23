@@ -145,7 +145,6 @@
 
 (use-package general
   :general
-
   ;; transient states
   (general-define-key
    :keymap company-active-map
@@ -155,8 +154,10 @@
    :keymap company-search-map
    "C-j"     #'company-select-next-or-abort
    "C-k"     #'company-select-previous-or-abort)
-
   ;; general keybindings
+  (general-define-key
+   :states 'insert
+   "C-SPC"    #'company-complete)
   (leader-define
     :states '(normal visual)
     :keymaps 'override
