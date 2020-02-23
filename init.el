@@ -325,17 +325,30 @@
   :demand
   :init
   :config
-  (setq centaur-tabs-style "rounded")
+  (setq
+   centaur-tabs-style "rounded"
+   centaur-tabs-cycle-scope 'tabs
+   centaur-tabs-set-icons t
+   centaur-tabs-height 32)
+  (centaur-tabs-group-by-projectile-project)
   (centaur-tabs-mode t)
   :general
   (general-define-key
    :keymaps 'override
    [C-iso-lefttab] #'centaur-tabs-backward
-   [C-tab] #'centaur-tabs-forward))
+   [C-tab] #'centaur-tabs-forward
+   "C-h" #'centaur-tabs-backward
+   "C-l" #'centaur-tabs-forward))
 
+(use-package sublimity
+  :straight t
+  :config
+  (require 'sublimity-scroll)
+  (sublimity-mode 1))
 
 ;; lang
 (use-package typescript-mode
-  :straight t
-  :mode ("\\.jsx?\\'" "\\.tsx?\\'")
+  :mode "\\.tsx?\\'"
   :hook (typescript-mode . lsp))
+
+(add-hook 'js-mode-hook #'lsp)
