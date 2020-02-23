@@ -24,6 +24,16 @@
   (interactive)
   (load-file user-init-file))
 
+(defun delete-current-file ()
+  "Delete current file."
+  (interactive)
+  (progn
+    (when (buffer-file-name)
+      (when (file-exists-p (buffer-file-name))
+        (progn
+          (delete-file (buffer-file-name)))))
+    (kill-buffer (current-buffer))))
+
 ;; helpers
 
 ;; from doom
@@ -222,7 +232,7 @@
   (general-define-key
    :keymaps minibuffer-maps
    "C-r"    #'evil-paste-from-register
-   "C-v"    #'yank
+   "C-V"    #'yank
    "C-j"    #'next-line
    "C-k"    #'previous-line)
   (general-define-key
@@ -280,6 +290,7 @@
     "f p" #'find-init-file
     "f r" #'counsel-recentf
     "f f" #'counsel-find-file
+    "f d" #'delete-current-file
     "f s" #'save-buffer
 
     ;; search
