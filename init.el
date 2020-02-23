@@ -122,8 +122,8 @@
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1))
 
 (use-package evil-magit
-  :after magit
-  :straight t)
+  :straight t
+  :after magit)
 
 ;; editor
 (use-package counsel
@@ -143,9 +143,20 @@
   (which-key-mode 1))
 
 
-;; general keybindings
 (use-package general
   :general
+
+  ;; transient states
+  (general-define-key
+   :keymap company-active-map
+   "C-j"     #'company-select-next
+   "C-k"     #'company-select-previous)
+  (general-define-key
+   :keymap company-search-map
+   "C-j"     #'company-select-next-or-abort
+   "C-k"     #'company-select-previous-or-abort)
+
+  ;; general keybindings
   (leader-define
     :states '(normal visual)
     :keymaps 'override
@@ -186,7 +197,8 @@
 
     ;; git
     "g g" #'magit-status
-    ))
+    )
+  )
 
 ;; ui
 (use-package doom-themes
