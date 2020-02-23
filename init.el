@@ -224,7 +224,7 @@
   :config
   (general-define-key "M-x" #'counsel-M-x)
 
-  (general-unbind 'motion
+  (general-unbind '(motion magit-status-mode-map)
     "SPC")
 
   (leader-define 'normal
