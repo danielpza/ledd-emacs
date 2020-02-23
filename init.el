@@ -160,6 +160,8 @@
 (use-package lsp-mode
   :straight t
   :commands lsp
+  :config
+  (setq lsp-auto-guess-root t)
   :hook
   (lsp-mode . lsp-enable-which-key-integration))
 
@@ -273,10 +275,12 @@
     ;; help
     "h" help-map
 
-    ;; code
+    ;; code/lsp
     "c f" #'format-all-buffer
     "c F" flycheck-command-map
     "c p" #'counsel-yank-pop
+    "c a" #'lsp-execute-code-action
+    "c r" #'lsp-rename
 
     ;; buffer
     "b d" #'kill-current-buffer
@@ -293,12 +297,13 @@
 
     ;; file
     "f t" #'treemacs
-    "f p" #'find-init-file
     "f r" #'counsel-recentf
     "f R" #'rename-file-and-buffer
     "f f" #'counsel-find-file
     "f d" #'delete-current-file
     "f s" #'save-buffer
+    "f p" #'find-init-file
+    "f P" #'eval-init-file
 
     ;; search
     "s b" #'counsel-grep-or-swiper
@@ -308,9 +313,6 @@
     "g g" #'magit-status
     "g d b" #'magit-diff-buffer-file
     "g l b" #'magit-log-buffer-file
-
-    ;; lsp
-    "l" #'lsp-command-map
     )
   )
 
