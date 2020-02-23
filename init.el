@@ -201,6 +201,8 @@
 
     ;; git
     "g g" #'magit-status
+    "g d b" #'magit-diff-buffer-file
+    "g l b" #'magit-log-buffer-file
     )
   )
 
@@ -211,64 +213,6 @@
   (setq doom-themes-treemacs-theme "doom-colors")
   (doom-themes-treemacs-config)
   (load-theme 'doom-dark+ t))
-
-;; ;; keybindings
-;; (use-package general
-;;   :config
-;;   (leader-define 'normal
-;;     :infix "f"
-;;     "" '(:ignore t :which-key "file")
-;;     "t" #'treemacs
-;;     "p" #'find-init-file
-;;     "r" #'counsel-recentf
-;;     "f" #'find-file
-;;     "s" #'save-buffer)
-
-;;   ;; toggle
-;;   (leader-define 'normal
-;;     :infix "t"
-;;     "" '(:ignore t :which-key "toggle")
-;;     "t" #'treemacs
-;;     "w" #'whitespace-mode
-;;     "u" #'undo-tree-visualize)
-
-;;   (leader-define 'normal
-;;     :infix "s"
-;;     "" '(:ignore t :which-key "search")
-;;     "b" #'counsel-grep-or-swiper
-;;     "p" #'counsel-rg)
-
-;;   (leader-define '(normal visual)
-;;     :infix "g"
-;;     "" '(:ignore t :which-key "magit")
-;;     "g" #'magit-status
-;;     "db" #'magit-diff-buffer-file
-;;     "lb" #'magit-log-buffer-file)
-
-;;   (leader-define 'normal
-;;     :infix "o"
-;;     "" '(:ignore t :which-key "open")
-;;     "a" #'org-agenda
-;;     "d" #'dired)
-
-;;   (leader-define '(normal visual)
-;;     :infix "e"
-;;     "" '(:ignore t :which-key "eval")
-;;     "i" #'eval-init-file
-;;     "b" #'eval-buffer)
-
-;;   (leader-define 'normal
-;;     :infix "b"
-;;     "" '(:ignore t :which-key "buffer")
-;;     "k" #'kill-current-buffer
-;;     "e" #'eval-buffer
-;;     "b" #'ivy-switch-buffer
-;;     "r" #'revert-buffer-no-confirm
-;;     "p" #'previous-buffer
-;;     "n" #'next-buffer
-;;     "s" #'open-scratch-buffer)
-
-;;   )
 
 ;; (use-package projectile
 ;;   :config
