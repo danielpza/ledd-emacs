@@ -304,6 +304,11 @@
   (doom-themes-treemacs-config)
   (load-theme 'doom-dark+ t))
 
+(use-package doom-modeline
+  :straight t
+  :config (doom-modeline-mode 1))
+
+
 ;; lang
 (use-package typescript-mode
   :straight t
