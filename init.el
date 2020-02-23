@@ -185,6 +185,34 @@
   (setq projectile-completion-system 'ivy)
   (projectile-mode 1))
 
+(use-package all-the-icons
+  :straight t)
+
+(use-package treemacs
+  :straight t
+  :commands treemacs
+  :config
+  (setq treemacs-follow-after-init t
+	treemacs-is-never-other-window t
+	treemacs-sorting 'alphabetic-case-insensitive-asc)
+  (treemacs-follow-mode 1))
+
+(use-package treemacs-evil
+  :straight t
+  :after treemacs evil)
+
+(use-package treemacs-projectile
+  :straight t
+  :after treemacs projectile)
+
+(use-package treemacs-icons-dired
+  :straight t
+  :after treemacs dired all-the-icons
+  :config (treemacs-icons-dired-mode))
+
+(use-package treemacs-magit
+  :straight t
+  :after treemacs magit)
 
 ;; keybindings
 (use-package general
@@ -199,7 +227,7 @@
    "C-k"    #'previous-line)
   (general-define-key
    :keymap company-active-map
-   "RET"     nil
+   ;; "RET"     nil
    "C-j"     #'company-select-next
    "C-k"     #'company-select-previous)
   (general-define-key
@@ -280,22 +308,3 @@
 (use-package typescript-mode
   :straight t
   :hook (typescript-mode . lsp))
-
-;; ;; treemacs
-;; (use-package treemacs
-;;   :commands treemacs
-;;   :config
-;;   (treemacs-follow-mode 1))
-
-;; (use-package treemacs-evil
-;;   :after treemacs evil)
-
-;; (use-package treemacs-projectile
-;;   :after treemacs projectile)
-
-;; (use-package treemacs-icons-dired
-;;   :after treemacs dired
-;;   :config (treemacs-icons-dired-mode))
-
-;; (use-package treemacs-magit
-;;   :after treemacs magit)
