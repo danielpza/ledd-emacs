@@ -379,7 +379,9 @@
    [C-iso-lefttab] #'centaur-tabs-backward
    [C-tab] #'centaur-tabs-forward
    "C-h" #'centaur-tabs-backward
-   "C-l" #'centaur-tabs-forward))
+   "C-l" #'centaur-tabs-forward
+   "C-S-h" #'centaur-tabs-backward-group
+   "C-S-l" #'centaur-tabs-forward-group))
 
 (use-package sublimity
   :straight t
