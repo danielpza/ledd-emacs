@@ -406,6 +406,7 @@
 
 (use-package prodigy
   :straight t
+  :general
   (leader-define
     :states '(normal visual)
     :keymaps 'override
