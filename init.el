@@ -161,7 +161,10 @@
   :straight t
   :commands lsp
   :config
-  (setq lsp-auto-guess-root t)
+  (setq lsp-auto-guess-root t
+	gc-cons-threshold 100000000
+	read-process-output-max (* 1024 1024)
+	lsp-idle-delay 0.200)
   :hook
   (lsp-mode . lsp-enable-which-key-integration))
 
@@ -171,7 +174,8 @@
   :commands company-lsp
   :config
   (setq company-minimum-prefix-length 1
-	company-idle-delay 0.0))
+	company-idle-delay 0.0
+	company-lsp-async t))
 
 (use-package lsp-ivy
   :straight t
@@ -281,6 +285,8 @@
     "c p" #'counsel-yank-pop
     "c a" #'lsp-execute-code-action
     "c r" #'lsp-rename
+    "c d" #'lsp-find-definition
+    "c D" #'lsp-find-references
 
     ;; buffer
     "b d" #'kill-current-buffer
