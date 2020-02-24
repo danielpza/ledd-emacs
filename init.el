@@ -271,6 +271,7 @@
 
     ;; projectile
     "p" projectile-command-map
+    "p t" #'treemacs-projectile
 
     ;; window
     "w" evil-window-map
@@ -401,6 +402,13 @@
     )
   )
 
+(use-package prodigy
+  :straight t
+  (leader-define
+    :states '(normal visual)
+    :keymaps 'override
+    "P" #'prodigy))
+
 ;; lang
 (use-package typescript-mode
   :straight t
@@ -419,3 +427,6 @@
       (let ((eslint (expand-file-name "node_modules/eslint/bin/eslint.js" root)))
         (setq-local flycheck-javascript-eslint-executable eslint)))))
 (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
+
+(when (file-exists-p (concat user-emacs-directory "custom.el"))
+  (load-file (concat user-emacs-directory "custom.el")))
