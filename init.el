@@ -162,9 +162,12 @@
   :commands lsp
   :config
   (setq lsp-auto-guess-root t
-	gc-cons-threshold 100000000
-	read-process-output-max (* 1024 1024)
-	lsp-idle-delay 0.200)
+        lsp-keep-workspace-alive nil
+
+	;; gc-cons-threshold 100000000
+	;; read-process-output-max (* 1024 1024)
+	;; lsp-idle-delay 0.200
+        )
   :hook
   (lsp-mode . lsp-enable-which-key-integration))
 
@@ -392,8 +395,8 @@
 (use-package diff-hl
   :straight t
   :config
-  (global-diff-hl-mode)
-  (diff-hl-margin-mode)
+  (global-diff-hl-mode 1)
+  ;; (diff-hl-margin-mode)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
   :general
   (leader-define
@@ -403,6 +406,11 @@
     "g ]" #'diff-hl-next-hunk
     )
   )
+
+(use-package company-box
+  :straight t
+  :after company
+  :hook (company-mode . company-box-mode))
 
 (use-package prodigy
   :straight t
@@ -418,7 +426,16 @@
   :mode "\\.tsx?\\'" "\\.index.d.ts\\'"
   :hook (typescript-mode . lsp))
 
-(add-hook 'js-mode-hook #'lsp)
+(use-package eslintd-fix
+  :straight t
+  :hook (js-mode-hook . eslintd-fix-mode))
+
+;; (use-package eglot
+;;   :straight t
+;;   :hook (js-mode-hook . eglot-ensure))
+  
+
+;; (add-hook 'js-mode-hook #'lsp)
 
 (defun my/use-eslint-from-node-modules ()
   (let ((root (locate-dominating-file
@@ -428,7 +445,9 @@
                    (and eslint (file-executable-p eslint)))))))
     (when root
       (let ((eslint (expand-file-name "node_modules/eslint/bin/eslint.js" root)))
-        (setq-local flycheck-javascript-eslint-executable eslint)))))
+        (setq-local flycheck-javascript-eslint-executable eslint
+		    eslintd-fix-executable eslint
+                    )))))
 (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 
 (when (file-exists-p (concat user-emacs-directory "custom.el"))
