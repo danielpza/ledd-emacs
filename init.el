@@ -55,6 +55,32 @@
           (set-visited-file-name new-name)
           (set-buffer-modified-p nil))))))
 
+;; https://stackoverflow.com/questions/8008211/buffer-local-function-in-elisp
+(defmacro ledd/def-local-func (func default)
+  (let ((variable (intern (format "%s-func" func))))
+    (progn
+      `(defvar ,variable ,default "This variable contains buffer local function")
+      `(make-variable-buffer-local ',variable)
+      `(defun ,func (&rest args)
+	 "This function run buffer-local function"
+	 (interactive)
+	 (if (called-interactively-p 'any)
+             (call-interactively ,variable)
+	   (apply ,variable args)))
+      ;; `(setq ,variable ,default)
+      )
+    )
+  )
+
+(defun ledd/nofunc ()
+  (interactive)
+  (message "No function specified"))
+
+(ledd/def-local-func ledd/code-action 'ledd/nofunc)
+(ledd/def-local-func ledd/code-rename 'ledd/nofunc)
+(ledd/def-local-func ledd/code-definition 'ledd/nofunc)
+(ledd/def-local-func ledd/code-references 'ledd/nofunc)
+(ledd/def-local-func ledd/rename-file 'rename-file-and-buffer)
 
 ;; helpers
 
@@ -89,7 +115,7 @@
       inhibit-startup-screen t
       ring-bell-function 'ignore
       initial-scratch-message (concat initial-scratch-message (concat "emacs-init-time: " (emacs-init-time)))
-      debug-on-error t)
+      debug-on-error nil)
 
 ;;+straight
 (defvar bootstrap-version)
@@ -157,29 +183,29 @@
   (global-flycheck-mode))
 
 ;; code/lsp
-(use-package lsp-mode
-  :straight t
-  :commands lsp
-  :config
-  (setq lsp-auto-guess-root t
-	gc-cons-threshold 100000000
-	read-process-output-max (* 1024 1024)
-	lsp-idle-delay 0.200)
-  :hook
-  (lsp-mode . lsp-enable-which-key-integration))
+;; (use-package lsp-mode
+;;   :straight t
+;;   :commands lsp
+;;   :config
+;;   (setq lsp-auto-guess-root t
+;; 	gc-cons-threshold 100000000
+;; 	read-process-output-max (* 1024 1024)
+;; 	lsp-idle-delay 0.200)
+;;   :hook
+;;   (lsp-mode . lsp-enable-which-key-integration))
 
-(use-package company-lsp
-  :straight t
-  :after lsp-mode company
-  :commands company-lsp
-  :config
-  (setq company-minimum-prefix-length 1
-	company-idle-delay 0.0
-	company-lsp-async t))
+;; (use-package company-lsp
+;;   :straight t
+;;   :after lsp-mode company
+;;   :commands company-lsp
+;;   :config
+;;   (setq company-minimum-prefix-length 1
+;; 	company-idle-delay 0.0
+;; 	company-lsp-async t))
 
-(use-package lsp-ivy
-  :straight t
-  :commands (lsp-ivy-workspace-symbol lsp-ivy-global-workspace-symbol))
+;; (use-package lsp-ivy
+;;   :straight t
+;;   :commands (lsp-ivy-workspace-symbol lsp-ivy-global-workspace-symbol))
 
 (use-package editorconfig
   :straight t
@@ -271,7 +297,7 @@
 
     ;; projectile
     "p" projectile-command-map
-    "p t" #'treemacs-projectile
+    "p t" #'treemacs
 
     ;; window
     "w" evil-window-map
@@ -284,10 +310,10 @@
     "c f" #'format-all-buffer
     "c F" flycheck-command-map
     "c p" #'counsel-yank-pop
-    "c a" #'lsp-execute-code-action
-    "c r" #'lsp-rename
-    "c d" #'lsp-find-definition
-    "c D" #'lsp-find-references
+    "c a" #'ledd/code-action
+    "c r" #'ledd/code-rename
+    "c d" #'ledd/code-definition
+    "c D" #'ledd/code-references
 
     ;; buffer
     "b d" #'kill-current-buffer
@@ -305,7 +331,7 @@
     ;; file
     "f t" #'treemacs
     "f r" #'counsel-recentf
-    "f R" #'rename-file-and-buffer
+    "f R" #'ledd/rename-file
     "f f" #'counsel-find-file
     "f d" #'delete-current-file
     "f s" #'save-buffer
@@ -415,15 +441,41 @@
 ;; lang
 (use-package typescript-mode
   :straight t
-  :mode "\\.tsx?\\'" "\\.index.d.ts\\'"
-  :hook (typescript-mode . lsp))
+  :mode "\\.jsx?\\'" "\\.tsx?\\'" "\\.index.d.ts\\'"
+  ;; :hook (typescript-mode . lsp)
+  )
 
-(add-hook 'js-mode-hook #'lsp)
+(use-package tide
+  :straight t
+  :after typescript-mode company flycheck
+  :config
+  (defun setup-tide-mode ()
+    (interactive)
+    (tide-setup)
+    (flycheck-mode +1)
+    (eldoc-mode +1)
+    (tide-hl-identifier-mode +1)
+    (company-mode +1)
+    (setq flycheck-check-syntax-automatically '(save mode-enabled)
+	  company-tooltip-align-annotations t
+          tide-completion-ignore-case t
+	  tide-completion-detailed t
+	  tide-completion-enable-autoimport-suggestions t
+	  tide-always-show-documentation t)
+    (setq-local ledd/code-rename-func 'tide-rename-symbol
+                ledd/code-action-func 'tide-fix
+                ledd/code-definition-func 'tide-jump-to-definition
+                ledd/code-references-func 'tide-references
+		ledd/rename-file-func 'tide-rename-file)
+    )
+  :hook ((typescript-mode . tide-hl-identifier-mode)
+	 (typescript-mode . setup-tide-mode))
+  )
 
 (defun my/use-eslint-from-node-modules ()
   (let ((root (locate-dominating-file
-               (or (buffer-file-name) default-directory)
-               (lambda (dir)
+	       (or (buffer-file-name) default-directory)
+	       (lambda (dir)
                  (let ((eslint (expand-file-name "node_modules/eslint/bin/eslint.js" dir)))
                    (and eslint (file-executable-p eslint)))))))
     (when root
