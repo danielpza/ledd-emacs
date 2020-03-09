@@ -174,7 +174,17 @@
 (use-package company
   :straight t
   :config
-  (global-company-mode))
+  (global-company-mode)
+  ;; https://github.com/company-mode/company-mode/issues/530#issuecomment-226566961
+  (defun my-company-active-return ()
+    (interactive)
+    (if (company-explicit-action-p)
+        (company-complete)
+      (call-interactively
+       (or (key-binding (this-command-keys))
+           (key-binding (kbd "RET"))))))
+  (define-key company-active-map (kbd "<return>") #'my-company-active-return)
+  (define-key company-active-map (kbd "RET") #'my-company-active-return))
 
 (use-package flycheck
   :straight t
