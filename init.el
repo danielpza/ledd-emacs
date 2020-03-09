@@ -482,6 +482,17 @@
 	 (typescript-mode . setup-tide-mode))
   )
 
+(use-package markdown-mode
+  :straight t
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+
+(use-package vmd-mode
+  :straight t
+  :after markdown-mode)
+
 (defun my/use-eslint-from-node-modules ()
   (let ((root (locate-dominating-file
 	       (or (buffer-file-name) default-directory)
