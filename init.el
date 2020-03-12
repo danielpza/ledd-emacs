@@ -491,6 +491,10 @@
     )
   )
 
+(use-package eslintd-fix
+  :straight t
+  :hook ((typescript-mode . eslintd-fix-mode)))
+
 (use-package markdown-mode
   :straight t
   :mode (("README\\.md\\'" . gfm-mode)
