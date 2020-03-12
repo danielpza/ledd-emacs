@@ -480,6 +480,15 @@
     )
   :hook ((typescript-mode . tide-hl-identifier-mode)
 	 (typescript-mode . setup-tide-mode))
+  :general
+  (local-leader-define
+    :states '(normal visual)
+    :keymaps 'typescript-mode-map
+    ;; others
+    "r" 'tide-restart-server
+    ;; fixes
+    "f i" 'tide-organize-imports
+    )
   )
 
 (use-package markdown-mode
