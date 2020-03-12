@@ -517,5 +517,16 @@
         (setq-local flycheck-javascript-eslint-executable eslint)))))
 (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 
+(use-package git-link
+  :straight t
+  :general
+  (leader-define
+    :states '(normal visual)
+    :keymaps 'override
+    "g l l" 'git-link
+    "g l c" 'git-link-commit
+    "g l h" 'git-link-homepage
+    ))
+
 (when (file-exists-p (concat user-emacs-directory "custom.el"))
   (load-file (concat user-emacs-directory "custom.el")))
