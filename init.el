@@ -258,6 +258,7 @@
   :straight t
   :config
   (setq projectile-completion-system 'ivy)
+  (setq projectile-switch-project-action #'projectile-dired)
   (projectile-mode 1))
 
 (use-package all-the-icons
@@ -428,9 +429,10 @@
 (use-package diff-hl
   :straight t
   :config
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+  :init
   (global-diff-hl-mode)
   (diff-hl-margin-mode)
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
   :general
   (leader-define
     :states '(normal visual)
@@ -459,6 +461,7 @@
   :straight t
   :after typescript-mode company flycheck
   :config
+  (flycheck-add-next-checker 'typescript-tide 'javascript-eslint)
   (defun setup-tide-mode ()
     (interactive)
     (tide-setup)
