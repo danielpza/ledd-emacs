@@ -150,6 +150,7 @@
   (setq
    evil-want-C-u-scroll t
    evil-want-keybinding nil
+   evil-symbol-word-search t
    )
   :config
   (evil-mode 1))
