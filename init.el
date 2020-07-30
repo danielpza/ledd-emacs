@@ -100,7 +100,7 @@
 
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-display-line-numbers-mode)
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
+;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
@@ -112,9 +112,10 @@
       auto-save-default nil
       standard-indent 2
       js-indent-level 2
-      inhibit-startup-screen t
+      ;; inhibit-startup-screen t
       ring-bell-function 'ignore
-      initial-scratch-message (concat initial-scratch-message (concat "emacs-init-time: " (emacs-init-time)))
+      ;; initial-scratch-message (concat initial-scratch-message (concat "emacs-init-time: " (emacs-init-time)))
+      initial-major-mode 'org-mode
       debug-on-error nil)
 
 ;;+straight
@@ -250,6 +251,19 @@
 	ivy-wrap t)
   (ivy-mode 1))
 
+;; (use-package ivy-rich
+;;   :straight t
+;;   :after ivy
+;;   :config
+;;   (ivy-rich-mode 1))
+;; (use-package all-the-icons-ivy
+;;   :straight t
+;;   :config
+;;   (setq all-the-icons-ivy-file-commands
+;; 	'(counsel-find-file counsel-file-jump counsel-recentf counsel-projectile-find-file counsel-projectile-find-dir projectile-find-file))
+;;   (all-the-icons-ivy-setup)
+;;   )
+
 (use-package which-key
   :straight t
   :config
@@ -309,7 +323,7 @@
 
     ;; projectile
     "p" projectile-command-map
-    "p t" #'treemacs
+    "p t" #'neotree-project-dir
 
     ;; window
     "w" evil-window-map
@@ -320,6 +334,7 @@
 
     ;; code/lsp
     "c f" #'format-all-buffer
+    "c c" #'recenter
     "c F" flycheck-command-map
     "c p" #'counsel-yank-pop
     "c a" #'ledd/code-action
@@ -341,7 +356,7 @@
     "e p" 'flycheck-previous-error
 
     ;; file
-    "f t" #'treemacs
+    ;; "f t" #'treemacs
     "f r" #'counsel-recentf
     "f R" #'ledd/rename-file
     "f f" #'counsel-find-file
@@ -362,31 +377,55 @@
   )
 
 ;; ui
-(use-package treemacs
+(use-package neotree
   :straight t
-  :commands treemacs
   :config
-  (setq treemacs-follow-after-init t
-	treemacs-is-never-other-window t
-	treemacs-sorting 'alphabetic-case-insensitive-asc)
-  (treemacs-follow-mode 1))
+  (defun neotree-project-dir ()
+    "Open NeoTree using the git root."
+    (interactive)
+    (let ((project-dir (projectile-project-root))
+          (file-name (buffer-file-name)))
+      (neotree-show)
+      (if project-dir
+          (if (neo-global--window-exists-p)
+              (progn
+                (neotree-dir project-dir)
+                (neotree-find file-name)))
+        (message "Could not find git project root."))))
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+  (setq neo-smart-open t)
+  ;; (setq projectile-switch-project-action 'neotree-projectile-action)
+  ;; (setq treemacs-follow-after-init t
+  ;; 	treemacs-is-never-other-window t
+  ;; 	treemacs-sorting 'alphabetic-case-insensitive-asc)
+  ;; (treemacs-follow-mode 1)
+  )
 
-(use-package treemacs-evil
-  :straight t
-  :after treemacs evil)
+;; (use-package treemacs
+;;   :straight t
+;;   :commands treemacs
+;;   :config
+;;   (setq treemacs-follow-after-init t
+;; 	treemacs-is-never-other-window t
+;; 	treemacs-sorting 'alphabetic-case-insensitive-asc)
+;;   (treemacs-follow-mode 1))
 
-(use-package treemacs-projectile
-  :straight t
-  :after treemacs projectile)
+;; (use-package treemacs-evil
+;;   :straight t
+;;   :after treemacs evil)
 
-(use-package treemacs-icons-dired
-  :straight t
-  :after treemacs dired all-the-icons
-  :config (treemacs-icons-dired-mode))
+;; (use-package treemacs-projectile
+;;   :straight t
+;;   :after treemacs projectile)
 
-(use-package treemacs-magit
-  :straight t
-  :after treemacs magit)
+;; (use-package treemacs-icons-dired
+;;   :straight t
+;;   :after treemacs dired all-the-icons
+;;   :config (treemacs-icons-dired-mode))
+
+;; (use-package treemacs-magit
+;;   :straight t
+;;   :after treemacs magit)
 
 (use-package doom-themes
   :straight t
@@ -509,6 +548,9 @@
 (use-package vmd-mode
   :straight t
   :after markdown-mode)
+
+(use-package yaml-mode
+  :straight t)
 
 (defun my/use-eslint-from-node-modules ()
   (let ((root (locate-dominating-file
