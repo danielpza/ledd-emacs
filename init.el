@@ -30,8 +30,8 @@
   (progn
     (when (buffer-file-name)
       (when (file-exists-p (buffer-file-name))
-        (progn
-          (delete-file (buffer-file-name)))))
+	(progn
+	  (delete-file (buffer-file-name)))))
     (kill-buffer (current-buffer))))
 
 (defun projectile-toggle-eshell ()
@@ -44,16 +44,16 @@
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
   (let ((name (buffer-name))
-        (filename (buffer-file-name)))
+	(filename (buffer-file-name)))
     (if (not filename)
-        (message "Buffer '%s' is not visiting a file!" name)
+	(message "Buffer '%s' is not visiting a file!" name)
       (if (get-buffer new-name)
-          (message "A buffer named '%s' already exists!" new-name)
-        (progn
-          (rename-file filename new-name 1)
-          (rename-buffer new-name)
-          (set-visited-file-name new-name)
-          (set-buffer-modified-p nil))))))
+	  (message "A buffer named '%s' already exists!" new-name)
+	(progn
+	  (rename-file filename new-name 1)
+	  (rename-buffer new-name)
+	  (set-visited-file-name new-name)
+	  (set-buffer-modified-p nil))))))
 
 ;; https://stackoverflow.com/questions/8008211/buffer-local-function-in-elisp
 (defmacro ledd/def-local-func (func default)
@@ -65,7 +65,7 @@
 	 "This function run buffer-local function"
 	 (interactive)
 	 (if (called-interactively-p 'any)
-             (call-interactively ,variable)
+	     (call-interactively ,variable)
 	   (apply ,variable args)))
       ;; `(setq ,variable ,default)
       )
@@ -125,9 +125,9 @@
       (bootstrap-version 5))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
+	(url-retrieve-synchronously
+	 "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+	 'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
@@ -154,6 +154,7 @@
    evil-symbol-word-search t
    )
   :config
+  (setq evil-want-C-u-scroll t)
   (evil-mode 1))
 
 (use-package evil-collection
@@ -181,10 +182,10 @@
   (defun my-company-active-return ()
     (interactive)
     (if (company-explicit-action-p)
-        (company-complete)
+	(company-complete)
       (call-interactively
        (or (key-binding (this-command-keys))
-           (key-binding (kbd "RET"))))))
+	   (key-binding (kbd "RET"))))))
   (define-key company-active-map (kbd "<return>") #'my-company-active-return)
   (define-key company-active-map (kbd "RET") #'my-company-active-return))
 
@@ -312,6 +313,11 @@
    "C-S-C"     #'kill-ring-save
    "C-S-V"     #'yank
    "C-s"   #'save-buffer)
+  ;; (general-define-key
+  ;;  :keymaps 'override
+  ;;  "C-u"    #'evil-scroll-up
+  ;;  )
+
 
   (leader-define
     :states '(normal visual)
@@ -384,14 +390,14 @@
     "Open NeoTree using the git root."
     (interactive)
     (let ((project-dir (projectile-project-root))
-          (file-name (buffer-file-name)))
+	  (file-name (buffer-file-name)))
       (neotree-show)
       (if project-dir
-          (if (neo-global--window-exists-p)
-              (progn
-                (neotree-dir project-dir)
-                (neotree-find file-name)))
-        (message "Could not find git project root."))))
+	  (if (neo-global--window-exists-p)
+	      (progn
+		(neotree-dir project-dir)
+		(neotree-find file-name)))
+	(message "Could not find git project root."))))
   (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
   (setq neo-smart-open t)
   ;; (setq projectile-switch-project-action 'neotree-projectile-action)
@@ -491,9 +497,23 @@
     "P" #'prodigy))
 
 ;; lang
+(use-package json-mode
+  :straight t
+  ;;   :mode "\\.json\\'"
+  )
+
+(use-package web-mode
+  :straight t
+  ;; :mode "\\.jsx?\\'" "\\.tsx?\\'"
+  )
+
 (use-package typescript-mode
   :straight t
-  :mode "\\.jsx?\\'" "\\.tsx?\\'" "\\.index.d.ts\\'"
+  :mode "\\.index.d.ts\\'" "\\.jsx?\\'" "\\.tsx?\\'"
+  :config
+  (setq typescript-indent-level 2)
+  (add-to-list 'interpreter-mode-alist '("node" . typescript-mode))
+  ;; :hook (javascript-mode . typescript-mode)
   ;; :hook (typescript-mode . lsp)
   )
 
@@ -501,25 +521,34 @@
   :straight t
   :after typescript-mode company flycheck
   :config
+  (add-hook 'web-mode-hook
+	    (lambda ()
+	      (when (string-equal "tsx" (file-name-extension buffer-file-name))
+		(setup-tide-mode))))
+  (add-hook 'web-mode-hook
+	    (lambda ()
+	      (when (string-equal "jsx" (file-name-extension buffer-file-name))
+		(setup-tide-mode))))
   (flycheck-add-next-checker 'typescript-tide 'javascript-eslint)
+  ;; (flycheck-add-mode 'typescript-tslint 'web-mode)
   (defun setup-tide-mode ()
     (interactive)
     (tide-setup)
     (flycheck-mode +1)
-    (eldoc-mode +1)
+    ;; (eldoc-mode +1)
     (tide-hl-identifier-mode +1)
     (company-mode +1)
+    (setq-local ledd/code-rename-func 'tide-rename-symbol
+		ledd/code-action-func 'tide-fix
+		ledd/code-definition-func 'tide-jump-to-definition
+		ledd/code-references-func 'tide-references
+		ledd/rename-file-func 'tide-rename-file)
     (setq flycheck-check-syntax-automatically '(save mode-enabled)
 	  company-tooltip-align-annotations t
-          tide-completion-ignore-case t
+	  tide-completion-ignore-case t
 	  tide-completion-detailed t
 	  tide-completion-enable-autoimport-suggestions t
 	  tide-always-show-documentation t)
-    (setq-local ledd/code-rename-func 'tide-rename-symbol
-                ledd/code-action-func 'tide-fix
-                ledd/code-definition-func 'tide-jump-to-definition
-                ledd/code-references-func 'tide-references
-		ledd/rename-file-func 'tide-rename-file)
     )
   :hook ((typescript-mode . tide-hl-identifier-mode)
 	 (typescript-mode . setup-tide-mode))
@@ -541,8 +570,8 @@
 (use-package markdown-mode
   :straight t
   :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
+	 ("\\.md\\'" . markdown-mode)
+	 ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
 (use-package vmd-mode
@@ -556,11 +585,11 @@
   (let ((root (locate-dominating-file
 	       (or (buffer-file-name) default-directory)
 	       (lambda (dir)
-                 (let ((eslint (expand-file-name "node_modules/eslint/bin/eslint.js" dir)))
-                   (and eslint (file-executable-p eslint)))))))
+		 (let ((eslint (expand-file-name "node_modules/eslint/bin/eslint.js" dir)))
+		   (and eslint (file-executable-p eslint)))))))
     (when root
       (let ((eslint (expand-file-name "node_modules/eslint/bin/eslint.js" root)))
-        (setq-local flycheck-javascript-eslint-executable eslint)))))
+	(setq-local flycheck-javascript-eslint-executable eslint)))))
 (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 
 (use-package git-link
